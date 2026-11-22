@@ -1,0 +1,6 @@
+{
+  "name": "foodfocus — The Right Way",
+  "description": "South African B2B digital media and information platform for the food industry, focused on food compliance from farm to fork: food safety, legislation, hygiene, quality, employee safety, CSR and sustainability.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
