@@ -223,7 +223,7 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full bg-white border border-[#D5D5D5] rounded-[3px] px-3 py-2.5 text-[13.5px] text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
+          className="w-full bg-white border border-[#CFCCBE] rounded-lg px-3 py-2.5 text-[13.5px] text-[#0F1F17] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
         >
           <option value="all">All Acts & regulations</option>
           {LEGISLATION_CATEGORIES.map((c) => (
@@ -270,8 +270,8 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
               aria-pressed={year === y}
               className={`text-[12.5px] font-semibold px-3 py-1 rounded-full border transition-colors cursor-pointer ${
                 year === y
-                  ? 'bg-[#1C1C1C] border-[#1C1C1C] text-white'
-                  : 'border-[#D5D5D5] text-[#4A4A4A] hover:border-[#9BC53D]'
+                  ? 'bg-[#0F1F17] border-[#0F1F17] text-white'
+                  : 'border-[#CFCCBE] text-[#3F4A43] hover:border-[#9BC53D]'
               }`}
             >
               {y === 'all' ? 'Any time' : y}
@@ -279,24 +279,24 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
           ))}
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <label className="text-[11.5px] font-semibold text-[#6B6B6B]">
+          <label className="text-[11.5px] font-semibold text-[#5B675F]">
             From
             <input
               type="date"
               value={dateFrom}
               max={dateTo || undefined}
               onChange={(e) => setDateFrom(e.target.value)}
-              className="mt-1 w-full bg-white border border-[#D5D5D5] rounded-[3px] px-2 py-1.5 text-[12.5px] text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
+              className="mt-1 w-full bg-white border border-[#CFCCBE] rounded-lg px-2 py-1.5 text-[12.5px] text-[#0F1F17] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
             />
           </label>
-          <label className="text-[11.5px] font-semibold text-[#6B6B6B]">
+          <label className="text-[11.5px] font-semibold text-[#5B675F]">
             To
             <input
               type="date"
               value={dateTo}
               min={dateFrom || undefined}
               onChange={(e) => setDateTo(e.target.value)}
-              className="mt-1 w-full bg-white border border-[#D5D5D5] rounded-[3px] px-2 py-1.5 text-[12.5px] text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
+              className="mt-1 w-full bg-white border border-[#CFCCBE] rounded-lg px-2 py-1.5 text-[12.5px] text-[#0F1F17] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
             />
           </label>
         </div>
@@ -313,9 +313,9 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
   );
 
   return (
-    <div className="bg-[#F6F7F5]">
+    <div className="bg-[#F7F6F1]">
       {/* ================= HERO ================= */}
-      <section className="relative bg-[#141414] text-white overflow-hidden">
+      <section className="relative bg-[#0F1F17] text-white overflow-hidden">
         <div
           className="absolute inset-0 opacity-[0.07] pointer-events-none"
           style={{
@@ -364,18 +364,18 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                 <label htmlFor="legislation-search" className="sr-only">
                   Search legislation
                 </label>
-                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#8A8A8A]" />
+                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#8A948D]" />
                 <input
                   id="legislation-search"
                   type="search"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search by title, gazette number or keyword — e.g. R638, allergens, recall"
-                  className="w-full bg-white text-[#1C1C1C] text-[15px] pl-12 pr-32 py-4 rounded-[6px] shadow-lg focus:outline-none focus:ring-4 focus:ring-[#9BC53D]/50"
+                  className="w-full bg-white text-[#0F1F17] text-[15px] pl-12 pr-32 py-4 rounded-full shadow-lg focus:outline-none focus:ring-4 focus:ring-[#9BC53D]/50"
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#9BC53D] hover:bg-[#84AC2D] text-[#111111] font-bold text-[13px] uppercase tracking-[0.06em] px-4 sm:px-5 py-2.5 rounded-[4px] cursor-pointer transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#9BC53D] hover:bg-[#84AC2D] text-[#0F1F17] font-semibold text-[14px] px-4 sm:px-5 py-2.5 rounded-full cursor-pointer transition-colors"
                 >
                   Search
                 </button>
@@ -402,7 +402,7 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                 { label: 'Open for comment', value: openCount },
                 { label: 'Saved by you', value: savedIds.length },
               ].map((s) => (
-                <div key={s.label} className="bg-white/[0.06] border border-white/10 rounded-[6px] px-4 py-3">
+                <div key={s.label} className="bg-white/[0.06] border border-white/10 rounded-xl px-4 py-3">
                   <dd className="text-[24px] sm:text-[28px] font-bold text-white tabular-nums leading-none">{s.value}</dd>
                   <dt className="mt-1.5 text-[11.5px] uppercase tracking-[0.08em] text-white/55 font-semibold">{s.label}</dt>
                 </div>
@@ -446,21 +446,21 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                 key={u.id}
                 type="button"
                 onClick={() => openDetail(u)}
-                className={`group text-left rounded-[8px] p-6 flex flex-col transition-all cursor-pointer border ${
+                className={`group text-left rounded-xl p-6 flex flex-col transition-all cursor-pointer border ${
                   i === 0
-                    ? 'bg-[#1C1C1C] text-white border-[#1C1C1C] hover:border-[#9BC53D] md:col-span-2 xl:col-span-1'
-                    : 'bg-white border-[#E4E4E4] hover:border-[#9BC53D] hover:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)]'
+                    ? 'bg-[#0F1F17] text-white border-[#0F1F17] hover:border-[#9BC53D] md:col-span-2 xl:col-span-1'
+                    : 'bg-white border-[#E3E1D6] hover:border-[#9BC53D] hover:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-4">
                   <AlertTriangle className={`w-4 h-4 ${i === 0 ? 'text-[#9BC53D]' : 'text-[#D97F06]'}`} />
                   <StatusBadge status={u.status} />
                 </div>
-                <h3 className={`text-[18px] font-bold leading-snug mb-3 ${i === 0 ? 'text-white' : 'text-[#1C1C1C]'}`}>{u.title}</h3>
-                <p className={`text-[13.5px] leading-[1.6] line-clamp-3 mb-5 ${i === 0 ? 'text-white/70' : 'text-[#555555]'}`}>{u.excerpt}</p>
-                <div className={`mt-auto flex items-center justify-between text-[12.5px] ${i === 0 ? 'text-white/60' : 'text-[#6B6B6B]'}`}>
+                <h3 className={`text-[18px] font-bold leading-snug mb-3 ${i === 0 ? 'text-white' : 'text-[#0F1F17]'}`}>{u.title}</h3>
+                <p className={`text-[13.5px] leading-[1.6] line-clamp-3 mb-5 ${i === 0 ? 'text-white/70' : 'text-[#5B675F]'}`}>{u.excerpt}</p>
+                <div className={`mt-auto flex items-center justify-between text-[12.5px] ${i === 0 ? 'text-white/60' : 'text-[#5B675F]'}`}>
                   <span>{u.date} · {u.gazetteRef}</span>
-                  <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${i === 0 ? 'text-[#9BC53D]' : 'text-[#1C1C1C]'}`} />
+                  <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${i === 0 ? 'text-[#9BC53D]' : 'text-[#0F1F17]'}`} />
                 </div>
               </button>
             ))}
@@ -482,19 +482,19 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                     resultsRef.current?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   aria-pressed={active}
-                  className={`text-left rounded-[8px] border p-4 sm:p-5 transition-all cursor-pointer ${
+                  className={`text-left rounded-xl border p-4 sm:p-5 transition-all cursor-pointer ${
                     active
-                      ? 'bg-[#9BC53D] border-[#9BC53D] text-[#111111]'
-                      : 'bg-white border-[#E4E4E4] hover:border-[#9BC53D]'
+                      ? 'bg-[#9BC53D] border-[#9BC53D] text-[#0F1F17]'
+                      : 'bg-white border-[#E3E1D6] hover:border-[#9BC53D]'
                   }`}
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <h3 className="text-[15px] sm:text-[16px] font-bold">{t.id}</h3>
-                    <span className={`text-[20px] font-bold tabular-nums ${active ? 'text-[#111111]' : 'text-[#6F9321]'}`}>
+                    <span className={`text-[20px] font-bold tabular-nums ${active ? 'text-[#0F1F17]' : 'text-[#4F7A0F]'}`}>
                       {countBy((u) => u.topic === t.id)}
                     </span>
                   </div>
-                  <p className={`mt-1.5 text-[12.5px] leading-[1.5] hidden sm:block ${active ? 'text-[#1C1C1C]/80' : 'text-[#6B6B6B]'}`}>
+                  <p className={`mt-1.5 text-[12.5px] leading-[1.5] hidden sm:block ${active ? 'text-[#0F1F17]/80' : 'text-[#5B675F]'}`}>
                     {t.description}
                   </p>
                 </button>
@@ -508,13 +508,13 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
           <div className="grid lg:grid-cols-[290px_1fr] gap-8 items-start">
             {/* Desktop filters */}
             <aside className="hidden lg:block space-y-6 lg:sticky lg:top-6">
-              <div className="bg-white border border-[#E4E4E4] rounded-[8px] p-5">
+              <div className="bg-white border border-[#E3E1D6] rounded-xl p-5">
                 <div className="flex items-center justify-between mb-5">
-                  <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#1C1C1C] inline-flex items-center gap-2">
+                  <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#0F1F17] inline-flex items-center gap-2">
                     <SlidersHorizontal className="w-4 h-4" /> Filters
                   </h2>
                   {activeChips.length > 0 && (
-                    <button type="button" onClick={clearAll} className="text-[12px] font-bold text-[#5E7F1A] hover:text-black cursor-pointer">
+                    <button type="button" onClick={clearAll} className="text-[12px] font-bold text-[#4F7A0F] hover:text-black cursor-pointer">
                       Clear all
                     </button>
                   )}
@@ -528,10 +528,10 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
               {/* Toolbar */}
               <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                 <div>
-                  <h2 id="results-heading" className="text-[20px] sm:text-[22px] font-bold text-[#1C1C1C]">
+                  <h2 id="results-heading" className="text-[20px] sm:text-[22px] font-bold text-[#0F1F17]">
                     {query ? <>Results for &ldquo;{query}&rdquo;</> : 'Legislation updates'}
                   </h2>
-                  <p className="text-[13px] text-[#6B6B6B] mt-0.5" aria-live="polite">
+                  <p className="text-[13px] text-[#5B675F] mt-0.5" aria-live="polite">
                     {results.length === 0
                       ? 'No matching legislation'
                       : `Showing ${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, results.length)} of ${results.length}`}
@@ -542,11 +542,11 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                   <button
                     type="button"
                     onClick={() => setFiltersOpen(true)}
-                    className="lg:hidden inline-flex items-center gap-2 bg-white border border-[#D5D5D5] rounded-[4px] px-3 py-2 text-[13px] font-bold cursor-pointer"
+                    className="lg:hidden inline-flex items-center gap-2 bg-white border border-[#CFCCBE] rounded-lg px-3 py-2 text-[13px] font-bold cursor-pointer"
                   >
                     <SlidersHorizontal className="w-4 h-4" /> Filters
                     {activeChips.length > 0 && (
-                      <span className="bg-[#9BC53D] text-[#111111] text-[11px] rounded-full w-5 h-5 inline-flex items-center justify-center">
+                      <span className="bg-[#9BC53D] text-[#0F1F17] text-[11px] rounded-full w-5 h-5 inline-flex items-center justify-center">
                         {activeChips.length}
                       </span>
                     )}
@@ -556,7 +556,7 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                     id="sort"
                     value={sort}
                     onChange={(e) => setSort(e.target.value as SortKey)}
-                    className="bg-white border border-[#D5D5D5] rounded-[4px] px-3 py-2 text-[13px] font-semibold text-[#1C1C1C] focus:outline-none focus:ring-2 focus:ring-[#9BC53D] cursor-pointer"
+                    className="bg-white border border-[#CFCCBE] rounded-lg px-3 py-2 text-[13px] font-semibold text-[#0F1F17] focus:outline-none focus:ring-2 focus:ring-[#9BC53D] cursor-pointer"
                   >
                     {query && <option value="relevance">Most relevant</option>}
                     <option value="newest">Newest first</option>
@@ -564,7 +564,7 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                     <option value="deadline">Comment deadline</option>
                     <option value="title">Title A–Z</option>
                   </select>
-                  <div className="hidden sm:flex bg-white border border-[#D5D5D5] rounded-[4px] p-0.5" role="group" aria-label="Layout">
+                  <div className="hidden sm:flex bg-white border border-[#CFCCBE] rounded-lg p-0.5" role="group" aria-label="Layout">
                     {(['grid', 'list'] as const).map((l) => {
                       const Icon = l === 'grid' ? LayoutGrid : List;
                       return (
@@ -574,7 +574,7 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                           onClick={() => setLayout(l)}
                           aria-pressed={layout === l}
                           aria-label={`${l} view`}
-                          className={`p-1.5 rounded-[3px] cursor-pointer ${layout === l ? 'bg-[#1C1C1C] text-white' : 'text-[#6B6B6B] hover:text-[#1C1C1C]'}`}
+                          className={`p-1.5 rounded-lg cursor-pointer ${layout === l ? 'bg-[#0F1F17] text-white' : 'text-[#5B675F] hover:text-[#0F1F17]'}`}
                         >
                           <Icon className="w-4 h-4" />
                         </button>
@@ -591,23 +591,23 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                       key={c.label}
                       type="button"
                       onClick={c.clear}
-                      className="inline-flex items-center gap-1.5 bg-white border border-[#D5D5D5] rounded-full pl-3 pr-2 py-1 text-[12.5px] font-semibold text-[#1C1C1C] hover:border-[#9BC53D] cursor-pointer"
+                      className="inline-flex items-center gap-1.5 bg-white border border-[#CFCCBE] rounded-full pl-3 pr-2 py-1 text-[12.5px] font-semibold text-[#0F1F17] hover:border-[#9BC53D] cursor-pointer"
                     >
                       {c.label}
-                      <X className="w-3.5 h-3.5 text-[#8A8A8A]" />
+                      <X className="w-3.5 h-3.5 text-[#8A948D]" />
                     </button>
                   ))}
-                  <button type="button" onClick={clearAll} className="text-[12.5px] font-bold text-[#5E7F1A] hover:text-black ml-1 cursor-pointer">
+                  <button type="button" onClick={clearAll} className="text-[12.5px] font-bold text-[#4F7A0F] hover:text-black ml-1 cursor-pointer">
                     Clear all
                   </button>
                 </div>
               )}
 
               {current.length === 0 ? (
-                <div className="bg-white border border-dashed border-[#CFCFCF] rounded-[8px] p-10 text-center">
-                  <Search className="w-8 h-8 text-[#BDBDBD] mx-auto mb-3" />
-                  <h3 className="text-[17px] font-bold text-[#1C1C1C]">No legislation matches your search</h3>
-                  <p className="text-[14px] text-[#6B6B6B] mt-1.5 max-w-[420px] mx-auto">
+                <div className="bg-white border border-dashed border-[#CFCCBE] rounded-xl p-10 text-center">
+                  <Search className="w-8 h-8 text-[#CFCCBE] mx-auto mb-3" />
+                  <h3 className="text-[17px] font-bold text-[#0F1F17]">No legislation matches your search</h3>
+                  <p className="text-[14px] text-[#5B675F] mt-1.5 max-w-[420px] mx-auto">
                     {savedOnly && savedIds.length === 0
                       ? 'You have not saved any legislation yet. Use the bookmark icon on any update to save it here.'
                       : 'Try a broader keyword, a gazette number such as R638, or remove some filters.'}
@@ -615,7 +615,7 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                   <button
                     type="button"
                     onClick={clearAll}
-                    className="mt-5 bg-[#1C1C1C] hover:bg-black text-white text-[13px] font-bold px-5 py-2.5 rounded-[4px] cursor-pointer"
+                    className="mt-5 bg-[#0F1F17] hover:bg-black text-white text-[13px] font-bold px-5 py-2.5 rounded-lg cursor-pointer"
                   >
                     Reset search & filters
                   </button>
@@ -640,12 +640,12 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
               {/* Pagination */}
               {results.length > 0 && (
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <label className="text-[13px] text-[#6B6B6B] inline-flex items-center gap-2">
+                  <label className="text-[13px] text-[#5B675F] inline-flex items-center gap-2">
                     Per page
                     <select
                       value={pageSize}
                       onChange={(e) => setPageSize(Number(e.target.value))}
-                      className="bg-white border border-[#D5D5D5] rounded-[4px] px-2 py-1.5 text-[13px] font-semibold text-[#1C1C1C] cursor-pointer"
+                      className="bg-white border border-[#CFCCBE] rounded-lg px-2 py-1.5 text-[13px] font-semibold text-[#0F1F17] cursor-pointer"
                     >
                       {[6, 12, 24].map((n) => (
                         <option key={n} value={n}>{n}</option>
@@ -690,16 +690,16 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                   setCategory(c.id);
                   resultsRef.current?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group text-left bg-white border border-[#E4E4E4] rounded-[8px] p-5 hover:border-[#9BC53D] transition-colors cursor-pointer flex gap-4"
+                className="group text-left bg-white border border-[#E3E1D6] rounded-xl p-5 hover:border-[#9BC53D] transition-colors cursor-pointer flex gap-4"
               >
-                <span className="w-10 h-10 rounded-[6px] bg-[#F2F7E6] text-[#5E7F1A] flex items-center justify-center shrink-0">
+                <span className="w-10 h-10 rounded-xl bg-[#F2F7E6] text-[#4F7A0F] flex items-center justify-center shrink-0">
                   <Scale className="w-5 h-5" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[11px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B]">{c.actCode}</span>
-                  <span className="block text-[15px] font-bold text-[#1C1C1C] mt-0.5 group-hover:text-[#5E7F1A]">{c.title}</span>
-                  <span className="block text-[13px] text-[#6B6B6B] mt-1.5 leading-[1.55] line-clamp-2">{c.summary}</span>
-                  <span className="mt-3 inline-flex items-center gap-1 text-[12.5px] font-bold text-[#1C1C1C]">
+                  <span className="block text-[11px] font-bold uppercase tracking-[0.08em] text-[#5B675F]">{c.actCode}</span>
+                  <span className="block text-[15px] font-bold text-[#0F1F17] mt-0.5 group-hover:text-[#4F7A0F]">{c.title}</span>
+                  <span className="block text-[13px] text-[#5B675F] mt-1.5 leading-[1.55] line-clamp-2">{c.summary}</span>
+                  <span className="mt-3 inline-flex items-center gap-1 text-[12.5px] font-bold text-[#0F1F17]">
                     {countBy((u) => u.categoryId === c.id)} updates <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </span>
@@ -715,19 +715,19 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
             <button
               type="button"
               onClick={() => downloadLibraryCsv(results.length ? results : LEGISLATION_UPDATES)}
-              className="inline-flex items-center gap-2 bg-[#1C1C1C] hover:bg-black text-white text-[13px] font-bold px-4 py-2.5 rounded-[4px] cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#0F1F17] hover:bg-black text-white text-[13px] font-bold px-4 py-2.5 rounded-lg cursor-pointer"
             >
               <FileSpreadsheet className="w-4 h-4" /> Export register (CSV)
             </button>
           </div>
-          <div className="bg-white border border-[#E4E4E4] rounded-[8px] overflow-hidden">
-            <div className="hidden md:grid grid-cols-[1fr_160px_110px_120px] gap-4 px-5 py-3 bg-[#FAFAFA] border-b border-[#E4E4E4] text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B]">
+          <div className="bg-white border border-[#E3E1D6] rounded-xl overflow-hidden">
+            <div className="hidden md:grid grid-cols-[1fr_160px_110px_120px] gap-4 px-5 py-3 bg-[#F7F6F1] border-b border-[#E3E1D6] text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#5B675F]">
               <span>Document</span>
               <span>Related update</span>
               <span>Format</span>
               <span className="text-right">Download</span>
             </div>
-            <ul className="divide-y divide-[#EFEFEF]">
+            <ul className="divide-y divide-[#E3E1D6]">
               {LEGISLATION_UPDATES.flatMap((u) => u.documents.map((d) => ({ u, d })))
                 .slice(0, 8)
                 .map(({ u, d }) => (
@@ -735,8 +735,8 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                     <div className="flex items-start gap-3 min-w-0">
                       <FileText className="w-5 h-5 text-[#B3261E] shrink-0 mt-0.5" />
                       <span className="min-w-0">
-                        <span className="block text-[14px] font-semibold text-[#1C1C1C] leading-snug">{d.title}</span>
-                        <span className="md:hidden block text-[12px] text-[#8A8A8A] mt-0.5">
+                        <span className="block text-[14px] font-semibold text-[#0F1F17] leading-snug">{d.title}</span>
+                        <span className="md:hidden block text-[12px] text-[#8A948D] mt-0.5">
                           {d.format} · {formatFileSize(d.sizeKb)}
                         </span>
                       </span>
@@ -744,19 +744,19 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                     <button
                       type="button"
                       onClick={() => openDetail(u)}
-                      className="hidden md:block text-left text-[12.5px] text-[#5E7F1A] font-semibold hover:underline truncate cursor-pointer"
+                      className="hidden md:block text-left text-[12.5px] text-[#4F7A0F] font-semibold hover:underline truncate cursor-pointer"
                       title={u.title}
                     >
                       {u.gazetteRef}
                     </button>
-                    <span className="hidden md:block text-[12.5px] text-[#6B6B6B]">
+                    <span className="hidden md:block text-[12.5px] text-[#5B675F]">
                       {d.format} · {formatFileSize(d.sizeKb)}
                     </span>
                     <div className="text-right">
                       <button
                         type="button"
                         onClick={() => downloadDocument(u, d)}
-                        className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#1C1C1C] border border-[#D5D5D5] hover:border-[#9BC53D] hover:bg-[#F2F7E6] rounded-[4px] px-3 py-1.5 cursor-pointer"
+                        className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#0F1F17] border border-[#CFCCBE] hover:border-[#9BC53D] hover:bg-[#F2F7E6] rounded-lg px-3 py-1.5 cursor-pointer"
                         aria-label={`Download ${d.title}`}
                       >
                         <Download className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Download</span>
@@ -775,18 +775,18 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
             <FaqAccordion items={LEGISLATION_FAQS} />
           </div>
           <div className="space-y-6">
-            <div className="bg-white border border-[#E4E4E4] rounded-[8px] p-5">
+            <div className="bg-white border border-[#E3E1D6] rounded-xl p-5">
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-[15px] font-bold text-[#1C1C1C]">Helpful links</h2>
+                <h2 className="text-[15px] font-bold text-[#0F1F17]">Helpful links</h2>
                 <button
                   type="button"
                   onClick={() => onNavigate('helpful-links')}
-                  className="text-[12.5px] font-bold text-[#5E7F1A] hover:text-black inline-flex items-center gap-1 cursor-pointer"
+                  className="text-[12.5px] font-bold text-[#4F7A0F] hover:text-black inline-flex items-center gap-1 cursor-pointer"
                 >
                   View all <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <ul className="divide-y divide-[#EFEFEF]">
+              <ul className="divide-y divide-[#E3E1D6]">
                 {HELPFUL_LINKS.slice(0, 5).map((l) => (
                   <li key={l.id}>
                     <a
@@ -796,10 +796,10 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
                       className="group flex items-start justify-between gap-3 py-3"
                     >
                       <span>
-                        <span className="block text-[13.5px] font-semibold text-[#1C1C1C] group-hover:text-[#5E7F1A]">{l.organisation}</span>
-                        <span className="block text-[12px] text-[#6B6B6B]">{l.title}</span>
+                        <span className="block text-[13.5px] font-semibold text-[#0F1F17] group-hover:text-[#4F7A0F]">{l.organisation}</span>
+                        <span className="block text-[12px] text-[#5B675F]">{l.title}</span>
                       </span>
-                      <ExternalLink className="w-3.5 h-3.5 text-[#8A8A8A] shrink-0 mt-1" />
+                      <ExternalLink className="w-3.5 h-3.5 text-[#8A948D] shrink-0 mt-1" />
                     </a>
                   </li>
                 ))}
@@ -815,22 +815,22 @@ export const LegislationPage: React.FC<LegislationPageProps> = ({
       {filtersOpen && (
         <div className="lg:hidden fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label="Filters">
           <div className="absolute inset-0 bg-black/50" onClick={() => setFiltersOpen(false)} />
-          <div className="absolute inset-y-0 right-0 w-full max-w-[380px] bg-[#F6F7F5] flex flex-col shadow-2xl">
-            <div className="flex items-center justify-between px-5 py-4 bg-white border-b border-[#E4E4E4]">
+          <div className="absolute inset-y-0 right-0 w-full max-w-[380px] bg-[#F7F6F1] flex flex-col shadow-2xl">
+            <div className="flex items-center justify-between px-5 py-4 bg-white border-b border-[#E3E1D6]">
               <h2 className="text-[15px] font-bold">Filters</h2>
               <button type="button" onClick={() => setFiltersOpen(false)} aria-label="Close filters" className="p-1 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-5">{filterPanel}</div>
-            <div className="p-4 bg-white border-t border-[#E4E4E4] grid grid-cols-2 gap-3">
-              <button type="button" onClick={clearAll} className="border border-[#D5D5D5] rounded-[4px] py-2.5 text-[13px] font-bold cursor-pointer">
+            <div className="p-4 bg-white border-t border-[#E3E1D6] grid grid-cols-2 gap-3">
+              <button type="button" onClick={clearAll} className="border border-[#CFCCBE] rounded-lg py-2.5 text-[13px] font-bold cursor-pointer">
                 Clear all
               </button>
               <button
                 type="button"
                 onClick={() => setFiltersOpen(false)}
-                className="bg-[#9BC53D] rounded-[4px] py-2.5 text-[13px] font-bold text-[#111111] cursor-pointer"
+                className="bg-[#9BC53D] rounded-lg py-2.5 text-[13px] font-bold text-[#0F1F17] cursor-pointer"
               >
                 Show {results.length} results
               </button>
@@ -851,8 +851,8 @@ const SectionTitle: React.FC<{ eyebrow: string; title: string; id?: string; noMa
   noMargin,
 }) => (
   <div className={noMargin ? '' : 'mb-6'}>
-    <span className="block text-[11.5px] font-bold uppercase tracking-[0.14em] text-[#6F9321] mb-1.5">{eyebrow}</span>
-    <h2 id={id} className="text-[22px] sm:text-[26px] font-bold text-[#1C1C1C] leading-tight">
+    <span className="block text-[11.5px] font-bold uppercase tracking-[0.14em] text-[#4F7A0F] mb-1.5">{eyebrow}</span>
+    <h2 id={id} className="text-[22px] sm:text-[26px] font-bold text-[#0F1F17] leading-tight">
       {title}
     </h2>
   </div>
@@ -860,7 +860,7 @@ const SectionTitle: React.FC<{ eyebrow: string; title: string; id?: string; noMa
 
 const FilterGroup: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <fieldset>
-    <legend className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B] mb-2.5">{title}</legend>
+    <legend className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#5B675F] mb-2.5">{title}</legend>
     <div className="space-y-1">{children}</div>
   </fieldset>
 );
@@ -871,10 +871,10 @@ const CheckRow: React.FC<{ checked: boolean; onChange: () => void; count: number
   count,
   children,
 }) => (
-  <label className="flex items-center gap-2.5 py-1 cursor-pointer text-[13.5px] text-[#1C1C1C]">
-    <input type="checkbox" checked={checked} onChange={onChange} className="w-4 h-4 accent-[#6F9321] cursor-pointer" />
+  <label className="flex items-center gap-2.5 py-1 cursor-pointer text-[13.5px] text-[#0F1F17]">
+    <input type="checkbox" checked={checked} onChange={onChange} className="w-4 h-4 accent-[#4F7A0F] cursor-pointer" />
     <span className="flex-1">{children}</span>
-    <span className="text-[12px] text-[#8A8A8A] tabular-nums">{count}</span>
+    <span className="text-[12px] text-[#8A948D] tabular-nums">{count}</span>
   </label>
 );
 
@@ -891,12 +891,12 @@ const PageButton: React.FC<{
     disabled={disabled}
     aria-label={label}
     aria-current={active ? 'page' : undefined}
-    className={`min-w-9 h-9 px-2 inline-flex items-center justify-center rounded-[4px] text-[13px] font-bold border transition-colors ${
+    className={`min-w-9 h-9 px-2 inline-flex items-center justify-center rounded-lg text-[13px] font-bold border transition-colors ${
       active
-        ? 'bg-[#1C1C1C] border-[#1C1C1C] text-white'
+        ? 'bg-[#0F1F17] border-[#0F1F17] text-white'
         : disabled
-        ? 'border-[#E4E4E4] text-[#C4C4C4] cursor-not-allowed'
-        : 'bg-white border-[#D5D5D5] text-[#1C1C1C] hover:border-[#9BC53D] cursor-pointer'
+        ? 'border-[#E3E1D6] text-[#CFCCBE] cursor-not-allowed'
+        : 'bg-white border-[#CFCCBE] text-[#0F1F17] hover:border-[#9BC53D] cursor-pointer'
     }`}
   >
     {children}

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>foodfocus — Food compliance, made clear | Redesign concept</title>
+  <meta name="description" content="South Africa's independent guide to food safety, legislation, hygiene and quality — from farm to fork." />
+  <meta name="theme-color" content="#0f1f17" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ Icon sprite ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4 3-7 8-7 0 5-3 8-8 7Z"/><path d="M12 14c0-3-2.5-6-7-6 0 4 2.5 6.5 7 6Z"/></symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 21V10l6 4V10l6 4V5h6v16Z"/><path d="M7 17h2M12 17h2M17 17h1"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="m3 8 9 5 9-5M12 13v8M7.5 5.5l9 5"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M6 9v3M4.5 10.5h3"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10"/><path d="M3 4h18l-1 6H4Z"/><path d="M9 20v-5h6v5"/></symbol>
+  <symbol id="i-fork" viewBox="0 0 24 24"><path d="M7 3v7a3 3 0 0 0 3 3v8M10 3v6M13 3v7a3 3 0 0 1-3 3"/><path d="M18 21V3c-2 1-3 4-3 8h3"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4v16l13-8Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><path d="m12 2 2.4 2.1 3.2-.3.8 3.1 2.8 1.6-1.2 3 1.2 3-2.8 1.6-.8 3.1-3.2-.3L12 22l-2.4-2.1-3.2.3-.8-3.1-2.8-1.6 1.2-3-1.2-3 2.8-1.6.8-3.1 3.2.3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M4 7h16M7 7l-3 7a3 3 0 0 0 6 0ZM17 7l-3 7a3 3 0 0 0 6 0Z"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6v18h12V7Z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></symbol>
+  <symbol id="i-grad" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5Z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2Z"/></symbol>
+  <symbol id="i-xt" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4 4 20" /></symbol>
+  <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></symbol>
+  <!-- Brand mark: the line from sprout (farm) to fork, taken from the foodfocus logo -->
+  <symbol id="brand-mark" viewBox="0 0 30 44">
+    <path d="M22 2v6M25 2v6M19 2v6M19 8a3 3 0 0 0 6 0M22 11v13H8v13" fill="none" stroke="#9bc53d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8 37c-1-3-4-4-6.5-3.5C2 36.5 5 38.5 8 37Z" fill="#9bc53d"/>
+    <path d="M8 37c1-3 4-4 6.5-3.5C14 36.5 11 38.5 8 37Z" fill="#9bc53d"/>
+  </symbol>
+</svg>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============ Alert bar ============ -->
+<div class="alert-bar" role="region" aria-label="Regulatory alert">
+  <div class="container">
+    <span class="alert-dot" aria-hidden="true"></span>
+    <span><strong>Open for comment:</strong> Draft R3337 Food Labelling Regulations — <span data-countdown="2026-12-15" data-format="short">closes 15 Dec</span></span>
+    <a href="#pulse">Read the brief <svg class="icon icon-s"><use href="#i-arrow"/></svg></a>
+  </div>
+</div>
+
+<!-- ============ Header ============ -->
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="#top" class="brand" aria-label="foodfocus — The Right Way, home">
+      <svg class="brand-mark" aria-hidden="true"><use href="#brand-mark"/></svg>
+      <span class="brand-text">
+        <span class="brand-name">food<span>focus</span></span>
+        <span class="brand-tag">The right way</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Main">
+      <a href="#pulse" class="active">Legislation <span class="nav-count" title="Updates this month">3</span></a>
+      <a href="#insights">Insights</a>
+      <a href="#news">News</a>
+      <a href="#webinars">Webinars</a>
+      <a href="#events">Events &amp; Training</a>
+      <a href="#directory">Directory</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="search-trigger" type="button" data-open-search aria-label="Search foodfocus">
+        <svg class="icon icon-s"><use href="#i-search"/></svg>
+        <span class="label">Search R638, HACCP…</span>
+        <kbd>/</kbd>
+      </button>
+      <a href="#subscribe" class="btn btn-primary">Subscribe</a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-open-menu>
+        <svg class="icon"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-backdrop" data-close-menu></div>
+  <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer-top">
+      <a href="#top" class="brand" data-close-menu>
+        <svg class="brand-mark" aria-hidden="true"><use href="#brand-mark"/></svg>
+        <span class="brand-text"><span class="brand-name">food<span>focus</span></span></span>
+      </a>
+      <button class="menu-toggle" style="display:inline-flex" type="button" aria-label="Close menu" data-close-menu>
+        <svg class="icon"><use href="#i-x"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Mobile">
+      <a href="#pulse" data-close-menu>Legislation <span class="nav-count">3</span></a>
+      <a href="#insights" data-close-menu>Insights</a>
+      <a href="#news" data-close-menu>News</a>
+      <a href="#webinars" data-close-menu>Webinars</a>
+      <a href="#events" data-close-menu>Events &amp; Training</a>
+      <a href="#directory" data-close-menu>Supplier Directory</a>
+    </nav>
+    <div class="drawer-foot">
+      <button class="btn btn-ghost" type="button" data-open-search data-close-menu><svg class="icon icon-s"><use href="#i-search"/></svg> Search</button>
+      <a href="#subscribe" class="btn btn-primary" data-close-menu>Get the Monday Brief</a>
+      <div class="drawer-links"><a href="#">About</a><a href="#">Advertise</a><a href="#">Our services</a><a href="#">Contact</a></div>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">South Africa's food compliance platform</span>
+        <h1>Food compliance, <em>made&nbsp;clear.</em></h1>
+        <p class="hero-lede">Legislation, food safety, hygiene and quality guidance for the South African food industry — from farm to fork, in plain language.</p>
+
+        <div class="hero-search">
+          <form data-hero-search role="search">
+            <svg class="icon" style="color:var(--faint)"><use href="#i-search"/></svg>
+            <label for="hero-q" class="sr-only">Search regulations, articles and suppliers</label>
+            <input id="hero-q" type="search" placeholder="Search a regulation, topic or supplier…" autocomplete="off" />
+            <button class="btn btn-primary" type="submit"><span class="label">Search</span><svg class="icon icon-s"><use href="#i-arrow"/></svg></button>
+          </form>
+          <div class="quick-topics">
+            <span>Popular:</span>
+            <a href="#" data-quick="R638">R638 Hygiene</a>
+            <a href="#" data-quick="R3337">R3337 Labelling</a>
+            <a href="#" data-quick="Listeria">Listeria</a>
+            <a href="#" data-quick="FSSC">FSSC 22000</a>
+            <a href="#" data-quick="allergen">Allergens</a>
+          </div>
+        </div>
+
+        <div class="hero-proof">
+          <div><strong>203k+</strong><span>website users / year</span></div>
+          <div><strong>4,000+</strong><span>QA &amp; compliance subscribers</span></div>
+          <div><strong>32k+</strong><span>social followers</span></div>
+        </div>
+      </div>
+
+      <!-- Regulatory Pulse -->
+      <aside class="pulse on-dark" id="pulse" aria-labelledby="pulse-title">
+        <div class="pulse-head">
+          <h2 id="pulse-title"><span class="live-dot" aria-hidden="true"></span>Regulatory Pulse</h2>
+          <span class="meta">Updated weekly</span>
+        </div>
+
+        <a href="#" class="deadline-card">
+          <div class="deadline-row">
+            <span class="deadline-label">Comment deadline</span>
+            <div class="deadline-days" data-countdown="2026-12-15" data-format="big" data-start="2026-08-15">
+              <strong>—</strong><span>days left</span>
+            </div>
+          </div>
+          <h3>Draft R3337: Front-of-pack labelling — submissions close 15 Dec 2026</h3>
+          <div class="deadline-bar" aria-hidden="true"><span data-deadline-bar style="width:70%"></span></div>
+        </a>
+
+        <ul class="pulse-list">
+          <li><a href="#">
+            <h3>Additive regulations draft amendment opens for public comment</h3>
+            <span class="mono">Act 54 of 1972 · Draft Notice</span>
+            <span class="pill pill-comment" style="background:rgba(240,168,48,.18);color:#f5c878">Comment</span>
+          </a></li>
+          <li><a href="#">
+            <h3>EHP directive: Certificate of Acceptability for cold-chain vehicles</h3>
+            <span class="mono">GNR 638 · Section 3 &amp; 13</span>
+            <span class="pill pill-new">New</span>
+          </a></li>
+          <li><a href="#">
+            <h3>New maximum limits for mycotoxins in infant &amp; cereal foods</h3>
+            <span class="mono">Act 54 of 1972 · Contaminants</span>
+            <span class="pill pill-updated">Updated</span>
+          </a></li>
+        </ul>
+
+        <div class="pulse-foot">
+          <span class="meta" style="color:rgba(255,255,255,.5)">12 tracked acts &amp; regulations</span>
+          <a href="#" class="link-arrow">Open tracker <svg class="icon icon-s"><use href="#i-arrow"/></svg></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ Farm to Fork navigator ============ -->
+  <section class="section journey" id="journey" aria-labelledby="journey-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Farm to fork navigator</span>
+          <h2 id="journey-title">Where are you in the food chain?</h2>
+        </div>
+        <p>Pick your stage to see the laws that apply, the checks auditors look for and the latest guidance — no legal jargon.</p>
+      </div>
+
+      <div class="journey-track reveal" role="tablist" aria-label="Food chain stage">
+        <span class="journey-progress" aria-hidden="true"></span>
+        <!-- stages rendered by script.js -->
+      </div>
+
+      <div class="journey-panel" id="journey-panel" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============ Insights ============ -->
+  <section class="section" id="insights" aria-labelledby="insights-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Insights</span>
+          <h2 id="insights-title">Expert analysis for QA teams</h2>
+        </div>
+        <a href="#" class="link-arrow">All articles <svg class="icon icon-s"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="insights-grid">
+        <article class="lead-story reveal">
+          <a href="#" class="card-link" aria-hidden="true" tabindex="-1">
+            <div class="img-frame"><img src="assets/lab.jpg" alt="" loading="lazy" /></div>
+          </a>
+          <span class="tag">Food Safety &amp; Quality</span>
+          <h3><a href="#">The top 10 advantages of digital food safety procedures</a></h3>
+          <p>Paper checklists are giving way to cloud-verified HACCP logs across South African plants. Here's how digital traceability lowers audit risk and closes corrective-action loops faster.</p>
+          <div class="byline"><span class="avatar">AK</span> Adele Kroon <span aria-hidden="true">·</span> 14 Aug 2025 <span aria-hidden="true">·</span> 6 min read</div>
+        </article>
+
+        <div class="side-stories">
+          <article class="story reveal">
+            <a href="#" class="card-link" aria-hidden="true" tabindex="-1"><div class="img-frame"><img src="assets/factory.jpg" alt="" loading="lazy" /></div></a>
+            <div>
+              <span class="tag">Public Health</span>
+              <h3><a href="#">Enough to make you sick: South Africa's foodborne illness problem</a></h3>
+              <span class="meta">Dr. Thabo Mokoena · 7 min read</span>
+            </div>
+          </article>
+          <article class="story reveal">
+            <a href="#" class="card-link" aria-hidden="true" tabindex="-1"><div class="img-frame"><img src="assets/packhouse.jpg" alt="" loading="lazy" /></div></a>
+            <div>
+              <span class="tag">Legislation</span>
+              <h3><a href="#">Government calls on food businesses to register — your CoA checklist</a></h3>
+              <span class="meta">Regulatory Desk · 4 min read</span>
+            </div>
+          </article>
+          <div class="partner-note reveal">
+            <span class="label">Partner insight</span>
+            <h4>Draft R3337: what changes on your label?</h4>
+            <p>A practical walk-through from Hahn &amp; Hahn Food Law — sponsored content, clearly labelled.</p>
+            <a href="#" class="link-arrow" style="font-size:14px;color:var(--lime-deep)">Read the guide <svg class="icon icon-s"><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <ol class="most-read reveal">
+        <li class="most-read-title">Most read this month</li>
+        <li><a href="#"><span class="num">01</span><h4>R638: what EHPs check during a hygiene inspection</h4><span class="meta">Hygiene · 5 min</span></a></li>
+        <li><a href="#"><span class="num">02</span><h4>FSSC 22000 v6 audits flag food safety culture gaps</h4><span class="meta">Audits · 5 min</span></a></li>
+        <li><a href="#"><span class="num">03</span><h4>"May contain" statements: allergen labelling under R146</h4><span class="meta">Labelling · 4 min</span></a></li>
+        <li><a href="#"><span class="num">04</span><h4>Listeriosis reporting duties every food business must know</h4><span class="meta">Public health · 6 min</span></a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ Toolkit ============ -->
+  <section class="section toolkit" id="toolkit" aria-labelledby="toolkit-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Compliance toolkit</span>
+          <h2 id="toolkit-title">Free templates, ready for audit day</h2>
+        </div>
+        <p>Checklists and registers written by our regulatory desk. Download free with your email — new ones added every month.</p>
+      </div>
+
+      <div class="toolkit-grid">
+        <a href="#" class="tool reveal" data-download>
+          <div class="tool-top"><span class="file-badge file-pdf">PDF · 6 pages</span><svg class="icon" style="color:var(--lime-deep)"><use href="#i-doc"/></svg></div>
+          <h3>R3337 labelling readiness checklist</h3>
+          <p>Front-of-pack warnings, claims and allergen declarations — step by step.</p>
+          <div class="tool-foot"><span class="meta">Labelling</span><span class="link-arrow">Download <svg class="icon icon-s"><use href="#i-download"/></svg></span></div>
+        </a>
+        <a href="#" class="tool reveal" data-download>
+          <div class="tool-top"><span class="file-badge file-xlsx">XLSX</span><svg class="icon" style="color:var(--lime-deep)"><use href="#i-truck"/></svg></div>
+          <h3>Vehicle Certificate of Acceptability inspection sheet</h3>
+          <p>Everything an EHP checks on a refrigerated food transport vehicle.</p>
+          <div class="tool-foot"><span class="meta">R638 · Cold chain</span><span class="link-arrow">Download <svg class="icon icon-s"><use href="#i-download"/></svg></span></div>
+        </a>
+        <a href="#" class="tool reveal" data-download>
+          <div class="tool-top"><span class="file-badge file-docx">DOCX</span><svg class="icon" style="color:var(--lime-deep)"><use href="#i-users"/></svg></div>
+          <h3>Food handler training register</h3>
+          <p>Record training and person-in-charge competence the way inspectors expect.</p>
+          <div class="tool-foot"><span class="meta">R638 · Hygiene</span><span class="link-arrow">Download <svg class="icon icon-s"><use href="#i-download"/></svg></span></div>
+        </a>
+        <a href="#" class="tool reveal" data-download>
+          <div class="tool-top"><span class="file-badge file-docx">DOCX</span><svg class="icon" style="color:var(--lime-deep)"><use href="#i-factory"/></svg></div>
+          <h3>Environmental Listeria monitoring plan</h3>
+          <p>Zone 1–4 swabbing matrix with frequencies and corrective actions.</p>
+          <div class="tool-foot"><span class="meta">Public health</span><span class="link-arrow">Download <svg class="icon icon-s"><use href="#i-download"/></svg></span></div>
+        </a>
+        <a href="#" class="tool reveal" data-download>
+          <div class="tool-top"><span class="file-badge file-xlsx">XLSX</span><svg class="icon" style="color:var(--lime-deep)"><use href="#i-doc"/></svg></div>
+          <h3>CIP validation record</h3>
+          <p>Log time, temperature, concentration and turbulence for every cycle.</p>
+          <div class="tool-foot"><span class="meta">Dairy · Hygiene</span><span class="link-arrow">Download <svg class="icon icon-s"><use href="#i-download"/></svg></span></div>
+        </a>
+        <a href="#" class="tool reveal" data-download>
+          <div class="tool-top"><span class="file-badge file-xlsx">XLSX</span><svg class="icon" style="color:var(--lime-deep)"><use href="#i-badge"/></svg></div>
+          <h3>HMS audit scoring sheet — red meat &amp; poultry</h3>
+          <p>Self-assess your abattoir against the Meat Safety Act checklist.</p>
+          <div class="tool-foot"><span class="meta">Meat Safety Act</span><span class="link-arrow">Download <svg class="icon icon-s"><use href="#i-download"/></svg></span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Webinars ============ -->
+  <section class="section webinars on-dark" id="webinars" aria-labelledby="web-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Webinars on demand</span>
+          <h2 id="web-title">Learn from the people who write the standards</h2>
+        </div>
+        <a href="#" class="btn btn-ghost">All webinars <svg class="icon icon-s"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="web-grid">
+        <a href="#" class="web-feature reveal">
+          <img src="assets/dairy.jpg" alt="" loading="lazy" />
+          <span class="play" aria-hidden="true"><svg class="icon"><use href="#i-play"/></svg></span>
+          <div class="web-feature-body">
+            <span class="eyebrow">Dairy Standard Agency</span>
+            <h3>Practical solutions to high somatic cell count in dairy herds</h3>
+            <div class="web-meta">
+              <span><svg class="icon icon-s"><use href="#i-clock"/></svg> 58 min</span>
+              <span><svg class="icon icon-s"><use href="#i-cal"/></svg> 7 Aug 2025</span>
+            </div>
+          </div>
+        </a>
+
+        <ul class="web-list">
+          <li class="reveal"><a href="#">
+            <span class="web-thumb"><svg class="icon"><use href="#i-play"/></svg></span>
+            <div><h3>Draft R3337 labelling regulations — what to prepare now</h3><span class="meta">Hahn &amp; Hahn Food Law · 10 Jul 2025</span></div>
+          </a></li>
+          <li class="reveal"><a href="#">
+            <span class="web-thumb"><svg class="icon"><use href="#i-play"/></svg></span>
+            <div><h3>A practical approach to hygienic design of dairy equipment</h3><span class="meta">Dairy Standard Agency · 24 Jul 2025</span></div>
+          </a></li>
+          <li class="reveal"><a href="#">
+            <span class="web-thumb"><svg class="icon"><use href="#i-play"/></svg></span>
+            <div><h3>Preparing your facility for municipal R638 hygiene inspections</h3><span class="meta">foodfocus Compliance Hub · 26 Jun 2025</span></div>
+          </a></li>
+          <li class="reveal"><a href="#">
+            <span class="web-thumb"><svg class="icon"><use href="#i-play"/></svg></span>
+            <div><h3>Allergen cross-contact validation &amp; VITAL risk assessment</h3><span class="meta">MicroChem &amp; foodfocus · 12 Jun 2025</span></div>
+          </a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ News ============ -->
+  <section class="section" id="news" aria-labelledby="news-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">News</span>
+          <h2 id="news-title">What's moving in the industry</h2>
+        </div>
+        <div class="tabs" role="tablist" aria-label="News type">
+          <button class="tab" role="tab" aria-selected="true" data-news="industry">Industry</button>
+          <button class="tab" role="tab" aria-selected="false" data-news="supplier">Supplier</button>
+        </div>
+      </div>
+      <div class="news-grid" id="news-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ Events & training ============ -->
+  <section class="section" id="events" aria-labelledby="events-title" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Events &amp; training</span>
+          <h2 id="events-title">Meet the industry. Upskill your team.</h2>
+        </div>
+        <a href="#" class="link-arrow">Full calendar <svg class="icon icon-s"><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="events-grid">
+        <div>
+          <article class="event reveal">
+            <div class="date-block"><div class="m">Sep</div><div class="d">17</div></div>
+            <div>
+              <h3>SA Food Safety &amp; Quality Compliance Summit</h3>
+              <div class="event-info"><span><svg class="icon icon-s"><use href="#i-pin"/></svg> Gallagher Convention Centre, Midrand</span><span><svg class="icon icon-s"><use href="#i-users"/></svg> Conference &amp; expo</span></div>
+            </div>
+            <a href="#" class="btn btn-ghost">Details</a>
+          </article>
+          <article class="event reveal">
+            <div class="date-block"><div class="m">Oct</div><div class="d">08</div></div>
+            <div>
+              <h3>SAAFoST Biennial Congress &amp; Trade Exhibition</h3>
+              <div class="event-info"><span><svg class="icon icon-s"><use href="#i-pin"/></svg> CTICC, Cape Town</span><span><svg class="icon icon-s"><use href="#i-grad"/></svg> Scientific congress</span></div>
+            </div>
+            <a href="#" class="btn btn-ghost">Details</a>
+          </article>
+          <article class="event reveal">
+            <div class="date-block"><div class="m">Oct</div><div class="d">23</div></div>
+            <div>
+              <h3>DSA Regional Hygiene Workshop</h3>
+              <div class="event-info"><span><svg class="icon icon-s"><use href="#i-pin"/></svg> Pietermaritzburg, KZN</span><span><svg class="icon icon-s"><use href="#i-factory"/></svg> Technical workshop</span></div>
+            </div>
+            <a href="#" class="btn btn-ghost">Details</a>
+          </article>
+        </div>
+
+        <aside class="training on-dark reveal">
+          <span class="eyebrow">Accredited training</span>
+          <h3>Courses for food teams</h3>
+          <p>Short, practical courses — on-site or online — with certificates your auditor will recognise.</p>
+          <div style="margin-top:14px">
+            <a href="#" class="course"><div><strong>HACCP &amp; FSSC 22000</strong><span>3 days · Online or on-site</span></div><svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a href="#" class="course"><div><strong>R638 Food Handler Hygiene</strong><span>1 day · Team bookings</span></div><svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a href="#" class="course"><div><strong>Internal Auditing Skills</strong><span>2 days · Online</span></div><svg class="icon"><use href="#i-arrow"/></svg></a>
+          </div>
+          <a href="#" class="btn btn-lime">Enquire about training</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Directory ============ -->
+  <section class="section directory" id="directory" aria-labelledby="dir-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Supplier directory</span>
+          <h2 id="dir-title">Find a trusted compliance partner</h2>
+        </div>
+        <p>Accredited labs, certification bodies, instruments and hygiene specialists serving South African food businesses.</p>
+      </div>
+
+      <div class="dir-tools reveal">
+        <label class="dir-search">
+          <svg class="icon icon-s" style="color:var(--faint)"><use href="#i-search"/></svg>
+          <span class="sr-only">Search suppliers</span>
+          <input type="search" id="dir-q" placeholder="Search suppliers or services…" autocomplete="off" />
+        </label>
+        <div class="dir-chips" id="dir-chips" role="group" aria-label="Filter by category"></div>
+      </div>
+
+      <div class="dir-grid" id="dir-grid"></div>
+
+      <div class="dir-cta reveal">
+        <p>Supply the food industry? <span>Get listed in front of 4,000+ QA and compliance decision-makers.</span></p>
+        <a href="#" class="btn btn-primary">List your company</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Partners ============ -->
+  <section class="partners" aria-label="Knowledge partners">
+    <div class="container">
+      <span class="partners-label">Knowledge partners</span>
+      <div class="partner-logos">
+        <span>Dairy Standard Agency</span>
+        <span>Hahn &amp; Hahn</span>
+        <span>SAAFoST</span>
+        <span>FoodStuff SA</span>
+        <span>CGCSA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Newsletter ============ -->
+  <section class="newsletter" id="subscribe" aria-labelledby="nl-title">
+    <div class="container">
+      <div class="newsletter-card reveal">
+        <div>
+          <span class="eyebrow">The Monday Brief</span>
+          <h2 id="nl-title">Every regulatory change, in your inbox before Monday's meeting.</h2>
+          <p>One short email a week: new gazette notices, comment deadlines, recalls and the articles your QA team should read.</p>
+        </div>
+        <form class="nl-form" data-newsletter>
+          <div class="nl-row">
+            <label for="nl-email" class="sr-only">Work email</label>
+            <input id="nl-email" type="email" required placeholder="Your work email" autocomplete="email" />
+            <button class="btn btn-primary" type="submit">Subscribe free</button>
+          </div>
+          <fieldset class="nl-options" style="border:0;padding:0;margin:0">
+            <legend class="sr-only">Topics</legend>
+            <label><input type="checkbox" checked /> Legislation alerts</label>
+            <label><input type="checkbox" checked /> Webinars</label>
+            <label><input type="checkbox" /> Supplier news</label>
+          </fieldset>
+          <span class="nl-note">Join 4,000+ food professionals. Unsubscribe anytime.</span>
+          <div class="nl-success" role="status">You're in. Your first Monday Brief arrives next week.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer on-dark">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <a href="#top" class="brand">
+          <svg class="brand-mark" aria-hidden="true"><use href="#brand-mark"/></svg>
+          <span class="brand-text"><span class="brand-name">food<span>focus</span></span><span class="brand-tag">The right way</span></span>
+        </a>
+        <p>We connect people to people, people to information, and problems to sector-specific solutions — from farm to fork.</p>
+        <div class="social">
+          <a href="#" aria-label="LinkedIn"><svg class="icon icon-s"><use href="#i-in"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg class="icon icon-s"><use href="#i-fb"/></svg></a>
+          <a href="#" aria-label="X"><svg class="icon icon-s"><use href="#i-xt"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg class="icon icon-s"><use href="#i-ig"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg class="icon icon-s"><use href="#i-yt"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Legislation</h4>
+        <ul>
+          <li><a href="#">Foodstuffs Act</a></li>
+          <li><a href="#">Labelling R146 / R3337</a></li>
+          <li><a href="#">Hygiene R638</a></li>
+          <li><a href="#">Meat Safety Act</a></li>
+          <li><a href="#">Helpful links</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#">Articles</a></li>
+          <li><a href="#">Webinars</a></li>
+          <li><a href="#">Training</a></li>
+          <li><a href="#">Toolkit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Industry</h4>
+        <ul>
+          <li><a href="#">Industry news</a></li>
+          <li><a href="#">Supplier news</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Directory</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Our services</a></li>
+          <li><a href="#">Advertise</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> foodfocus. All rights reserved.</span>
+      <nav aria-label="Legal"><a href="#">Privacy (POPIA)</a><a href="#">Terms</a><a href="#">Disclaimer</a></nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Search palette ============ -->
+<div class="palette" id="palette" aria-hidden="true">
+  <div class="palette-backdrop" data-close-search></div>
+  <div class="palette-box" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="palette-input">
+      <svg class="icon" style="color:var(--faint)"><use href="#i-search"/></svg>
+      <label for="palette-q" class="sr-only">Search</label>
+      <input id="palette-q" type="search" placeholder="Search regulations, articles, webinars, suppliers…" autocomplete="off" />
+      <kbd>Esc</kbd>
+    </div>
+    <div class="palette-results" id="palette-results"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

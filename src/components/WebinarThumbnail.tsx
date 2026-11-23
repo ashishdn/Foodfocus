@@ -18,7 +18,7 @@ export const WebinarThumbnail: React.FC<WebinarThumbnailProps> = ({
     <button
       type="button"
       onClick={onClick}
-      className="w-full text-left block rounded-[2px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.18)] group cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9BC53D]"
+      className="w-full text-left block rounded-lg overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.18)] group cursor-pointer focus-visible:outline-2 focus-visible:outline-[#9BC53D]"
     >
       {/* Red title strip */}
       <div className="bg-[#C82027] text-white px-3.5 py-2 flex items-center justify-between gap-2">
@@ -48,11 +48,11 @@ export const WebinarThumbnail: React.FC<WebinarThumbnailProps> = ({
           </div>
 
           <div className="flex items-center gap-3.5 my-auto">
-            <div className="w-12 h-12 rounded-full bg-[#9BC53D] group-hover:bg-white text-[#111111] flex items-center justify-center shrink-0 shadow-md transition-colors">
+            <div className="w-12 h-12 rounded-full bg-[#9BC53D] group-hover:bg-white text-[#0F1F17] flex items-center justify-center shrink-0 shadow-md transition-colors">
               <Play className="w-5 h-5 fill-current ml-0.5" />
             </div>
             <div>
-              <div className="inline-block bg-[#C82027] text-white text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.1em] px-2.5 py-1 rounded-[2px] mb-1.5">
+              <div className="inline-block bg-[#C82027] text-white text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.1em] px-2.5 py-1 rounded-lg mb-1.5">
                 WATCH THIS RECORDING
               </div>
               <div className="text-white font-bold text-[14px] sm:text-[15px] leading-snug line-clamp-2">

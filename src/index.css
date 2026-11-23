@@ -1,40 +1,210 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Public Sans", "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "DM Sans", "Public Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
-  --color-brand-black: #000000;
-  --color-brand-charcoal: #1C1C1C;
+  /* foodfocus redesign palette */
+  --color-ink: #0F1F17;
+  --color-ink-2: #183025;
+  --color-ink-3: #24402F;
+  --color-paper: #F7F6F1;
+  --color-line: #E3E1D6;
+  --color-line-strong: #CFCCBE;
+  --color-text: #18221C;
+  --color-muted: #5B675F;
+  --color-faint: #8A948D;
+  --color-lime: #9BC53D;
+  --color-lime-bright: #B5DC55;
+  --color-lime-deep: #4F7A0F;
+  --color-lime-soft: #EDF5D9;
+  --color-amber: #A35C00;
+  --color-amber-soft: #FFF0D4;
+  --color-blue: #245C9C;
+  --color-blue-soft: #E4EEF9;
+  --color-rose: #A8322A;
+  --color-rose-soft: #FBE6E3;
+
+  /* legacy names kept so older components still compile */
+  --color-brand-black: #0F1F17;
+  --color-brand-charcoal: #0F1F17;
   --color-brand-lime: #9BC53D;
   --color-brand-lime-dark: #84AC2D;
-  --color-brand-slate: #5B6067;
-  --color-brand-light: #F2F2F2;
-  --color-brand-band: #E9E9E9;
-  --color-brand-body: #333333;
-  --color-brand-meta: #8A8A8A;
+  --color-brand-slate: #183025;
+  --color-brand-light: #F7F6F1;
+  --color-brand-band: #EDF5D9;
+  --color-brand-body: #18221C;
+  --color-brand-meta: #8A948D;
+
+  --shadow-soft: 0 2px 4px rgba(15, 31, 23, .05), 0 12px 32px rgba(15, 31, 23, .08);
+  --shadow-lift: 0 24px 64px rgba(15, 31, 23, .22);
+
+  --animate-rise: rise .4s cubic-bezier(.2, .7, .2, 1);
+  --animate-fade: fade .2s ease-out;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+  }
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
-    color: #333333;
+    color: var(--color-text);
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
-    font-family: var(--font-display);
+  body {
+    background: var(--color-paper);
+    /* safety net against sideways scroll; clip (not hidden) keeps the sticky header working */
+    overflow-x: clip;
   }
+
+  img, svg, video {
+    max-width: 100%;
+  }
+
+  /* Headings use the editorial serif; component classes can still override with font-sans */
+  h1, h2 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  h3, h4 {
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-lime);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /* Same box as the inner pages (max-w-[1400px] px-4 sm:px-6 lg:px-8) so every edge lines up */
+  .ff-container {
+    width: 100%;
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 640px) {
+    .ff-container { padding-inline: 24px; }
+  }
+  @media (min-width: 1024px) {
+    .ff-container { padding-inline: 32px; }
+  }
+
+  .ff-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-lime-deep);
+  }
+  .ff-eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+  }
+  .ff-eyebrow-light { color: var(--color-lime); }
+
+  .ff-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .ff-btn-ink { background: var(--color-ink); color: #fff; }
+  .ff-btn-ink:hover { background: var(--color-ink-3); }
+  .ff-btn-lime { background: var(--color-lime); color: var(--color-ink); }
+  .ff-btn-lime:hover { background: var(--color-lime-bright); }
+  .ff-btn-ghost { border-color: var(--color-line-strong); background: transparent; }
+  .ff-btn-ghost:hover { border-color: var(--color-ink); }
+  .ff-btn-ghost-dark { border-color: rgba(255, 255, 255, .28); color: #fff; background: transparent; }
+  .ff-btn-ghost-dark:hover { border-color: #fff; }
+
+  .ff-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .ff-pill::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .ff-zoom img { transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+  .ff-zoom:hover img { transform: scale(1.04); }
+
+  .ff-live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #F0A830;
+    animation: ff-pulse 2s infinite;
+  }
+}
+
+@keyframes ff-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(240, 168, 48, .55); }
+  70% { box-shadow: 0 0 0 9px rgba(240, 168, 48, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(240, 168, 48, 0); }
 }
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
 /* Print / "Save as PDF" — print only the legislation brief content */
 @media print {
-  header.w-full,
+  header.site-header,
   footer,
   aside,
   button,

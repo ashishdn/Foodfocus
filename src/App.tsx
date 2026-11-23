@@ -1,15 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { X } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { EditorialModal, ModalState } from './components/EditorialModal';
+import { SearchPalette } from './components/SearchPalette';
 import { SiteFooter } from './components/SiteFooter';
 import { SiteHeader } from './components/SiteHeader';
-import {
-  INDUSTRY_NEWS_ITEMS,
-  LATEST_ARTICLES,
-  LEGISLATION_UPDATES,
-  SUPPLIER_NEWS_ITEMS,
-  WEBINAR_ITEMS,
-} from './data/foodfocusData';
+import { INDUSTRY_NEWS_ITEMS, LATEST_ARTICLES, SUPPLIER_NEWS_ITEMS } from './data/foodfocusData';
 import { AboutPage } from './pages/AboutPage';
 import { AdvertisePage } from './pages/AdvertisePage';
 import { HomePage } from './pages/HomePage';
@@ -24,7 +18,7 @@ import {
 } from './pages/SecondaryPages';
 import { ServicesPage } from './pages/ServicesPage';
 import { WebinarsPage } from './pages/WebinarsPage';
-import { PageId } from './types';
+import { EditorialArticle, PageId, SupplierListing, WebinarItem } from './types';
 
 const PAGE_IDS: PageId[] = [
   'home', 'about', 'services', 'advertise', 'contact', 'legislation', 'webinars',
@@ -58,7 +52,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>(initialRoute.page);
   const [subFilter, setSubFilter] = useState<string | undefined>(initialRoute.filter);
   const [modal, setModal] = useState<ModalState>(null);
-  const [globalSearch, setGlobalSearch] = useState<string | null>(null);
+  const [search, setSearch] = useState<{ open: boolean; query: string }>({ open: false, query: '' });
 
   const allArticles = useMemo(
     () => [...LATEST_ARTICLES, ...SUPPLIER_NEWS_ITEMS, ...INDUSTRY_NEWS_ITEMS],
@@ -70,30 +64,58 @@ export default function App() {
       const r = urlToRoute();
       setCurrentPage(r.page);
       setSubFilter(r.filter);
-      setGlobalSearch(null);
       setModal(null);
     };
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  const navigate = (page: PageId, filter?: string) => {
+  const navigate = useCallback((page: PageId, filter?: string) => {
     setCurrentPage(page);
     setSubFilter(filter);
-    setGlobalSearch(null);
     setModal(null);
     const url = routeToUrl(page, filter);
     if (url !== window.location.pathname + window.location.search) {
       window.history.pushState(null, '', url);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
+
+  const openSearch = useCallback((query = '') => setSearch({ open: true, query }), []);
+  const closeSearch = useCallback(() => setSearch((s) => ({ ...s, open: false })), []);
+
+  // "/" or Ctrl/Cmd+K opens search anywhere on the site
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = document.activeElement as HTMLElement | null;
+      const typing = !!el && (/INPUT|TEXTAREA|SELECT/.test(el.tagName) || el.isContentEditable);
+      if (!typing && (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'))) {
+        e.preventDefault();
+        openSearch();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [openSearch]);
+
+  const scrollToSubscribe = useCallback(() => {
+    const scroll = () => document.getElementById('subscribe')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (currentPage === 'home') {
+      scroll();
+    } else {
+      navigate('home');
+      setTimeout(scroll, 120);
+    }
+  }, [currentPage, navigate]);
+
+  const openArticle = useCallback((article: EditorialArticle) => setModal({ type: 'article', data: article }), []);
+  const openWebinar = useCallback((webinar: WebinarItem) => setModal({ type: 'webinar', data: webinar }), []);
+  const openSupplier = useCallback((supplier: SupplierListing) => setModal({ type: 'supplier', data: supplier }), []);
+  const openLegislation = useCallback((id: string) => navigate('legislation-detail', id), [navigate]);
 
   const handleOpenArticleById = (articleId: string) => {
     const found = allArticles.find((a) => a.id === articleId);
-    if (found) {
-      setModal({ type: 'article', data: found });
-    }
+    if (found) openArticle(found);
   };
 
   const handleSponsorClick = (title: string, context: string) => {
@@ -104,131 +126,23 @@ export default function App() {
     setModal({ type: 'social', network });
   };
 
-  const searchResults = useMemo(() => {
-    if (!globalSearch) return null;
-    const q = globalSearch.toLowerCase();
-    return {
-      articles: allArticles.filter(
-        (a) =>
-          a.title.toLowerCase().includes(q) ||
-          a.excerpt.toLowerCase().includes(q) ||
-          a.category.toLowerCase().includes(q)
-      ),
-      legislation: LEGISLATION_UPDATES.filter(
-        (l) =>
-          l.title.toLowerCase().includes(q) ||
-          l.excerpt.toLowerCase().includes(q) ||
-          l.tag.toLowerCase().includes(q)
-      ),
-      webinars: WEBINAR_ITEMS.filter(
-        (w) =>
-          w.title.toLowerCase().includes(q) || w.excerpt.toLowerCase().includes(q)
-      ),
-    };
-  }, [globalSearch, allArticles]);
-
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#333333]">
+    <div className="min-h-screen flex flex-col bg-paper text-text">
       <SiteHeader
         currentPage={currentPage}
         onNavigate={navigate}
-        onSearchSubmit={(query) => setGlobalSearch(query)}
-        onSocialClick={handleSocialClick}
-        onSponsorClick={handleSponsorClick}
+        onOpenSearch={() => openSearch()}
+        onSubscribe={scrollToSubscribe}
       />
 
-      {/* Global Search Results Banner */}
-      {globalSearch && searchResults && (
-        <section className="bg-[#F7F7F7] border-b border-[#DCDCDC] py-6">
-          <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between gap-4 mb-4">
-              <h2 className="text-[15px] font-bold uppercase tracking-wider text-[#1C1C1C]">
-                Search Results for &ldquo;{globalSearch}&rdquo; (
-                {searchResults.articles.length +
-                  searchResults.legislation.length +
-                  searchResults.webinars.length}
-                )
-              </h2>
-              <button
-                type="button"
-                onClick={() => setGlobalSearch(null)}
-                className="inline-flex items-center gap-1 text-[12.5px] font-bold text-[#5B6067] hover:text-[#1C1C1C] cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-                Clear Search
-              </button>
-            </div>
-
-            {searchResults.articles.length +
-              searchResults.legislation.length +
-              searchResults.webinars.length ===
-            0 ? (
-              <p className="text-[14px] text-[#555555]">
-                No matches found. Try terms like &ldquo;R638&rdquo;, &ldquo;R3337&rdquo;,
-                &ldquo;dairy&rdquo;, or &ldquo;digital&rdquo;.
-              </p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {searchResults.articles.map((a) => (
-                  <button
-                    key={a.id}
-                    type="button"
-                    onClick={() => setModal({ type: 'article', data: a })}
-                    className="text-left bg-white border border-[#E2E2E2] p-4 rounded-[2px] hover:border-[#9BC53D] cursor-pointer"
-                  >
-                    <div className="text-[11px] font-bold uppercase text-[#6F9321]">
-                      Article · {a.date}
-                    </div>
-                    <div className="font-bold text-[14px] text-[#1C1C1C] mt-1 underline decoration-[#1C1C1C]/35">
-                      {a.title}
-                    </div>
-                  </button>
-                ))}
-                {searchResults.legislation.map((l) => (
-                  <button
-                    key={l.id}
-                    type="button"
-                    onClick={() => navigate('legislation-detail', l.id)}
-                    className="text-left bg-white border border-[#E2E2E2] p-4 rounded-[2px] hover:border-[#9BC53D] cursor-pointer"
-                  >
-                    <div className="text-[11px] font-bold uppercase text-[#6F9321]">
-                      Legislation · {l.tag}
-                    </div>
-                    <div className="font-bold text-[14px] text-[#1C1C1C] mt-1 underline decoration-[#1C1C1C]/35">
-                      {l.title}
-                    </div>
-                  </button>
-                ))}
-                {searchResults.webinars.map((w) => (
-                  <button
-                    key={w.id}
-                    type="button"
-                    onClick={() => setModal({ type: 'webinar', data: w })}
-                    className="text-left bg-white border border-[#E2E2E2] p-4 rounded-[2px] hover:border-[#9BC53D] cursor-pointer"
-                  >
-                    <div className="text-[11px] font-bold uppercase text-[#6F9321]">
-                      Webinar · {w.duration}
-                    </div>
-                    <div className="font-bold text-[14px] text-[#1C1C1C] mt-1 underline decoration-[#1C1C1C]/35">
-                      {w.title}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Active Page Content */}
       <div className="flex-1">
         {currentPage === 'home' && (
           <HomePage
             onNavigate={navigate}
-            onOpenArticle={(article) => setModal({ type: 'article', data: article })}
-            onOpenWebinar={(webinar) => setModal({ type: 'webinar', data: webinar })}
-            onOpenSupplier={(supplier) => setModal({ type: 'supplier', data: supplier })}
-            onSocialClick={handleSocialClick}
+            onOpenArticle={openArticle}
+            onOpenWebinar={openWebinar}
+            onOpenSupplier={openSupplier}
+            onOpenSearch={openSearch}
             onSponsorClick={handleSponsorClick}
           />
         )}
@@ -241,15 +155,10 @@ export default function App() {
           <ServicesPage onNavigate={navigate} onSponsorClick={handleSponsorClick} />
         )}
 
-        {currentPage === 'advertise' && (
-          <AdvertisePage onSponsorClick={handleSponsorClick} />
-        )}
+        {currentPage === 'advertise' && <AdvertisePage onSponsorClick={handleSponsorClick} />}
 
         {currentPage === 'webinars' && (
-          <WebinarsPage
-            onOpenWebinar={(webinar) => setModal({ type: 'webinar', data: webinar })}
-            onSponsorClick={handleSponsorClick}
-          />
+          <WebinarsPage onOpenWebinar={openWebinar} onSponsorClick={handleSponsorClick} />
         )}
 
         {currentPage === 'legislation' && (
@@ -264,7 +173,7 @@ export default function App() {
           <LegislationDetailPage
             legislationId={subFilter}
             onNavigate={navigate}
-            onOpenArticle={(article) => setModal({ type: 'article', data: article })}
+            onOpenArticle={openArticle}
           />
         )}
 
@@ -276,8 +185,8 @@ export default function App() {
           <ArticlesArchivePage
             mode={currentPage}
             subFilter={subFilter}
-            onOpenArticle={(article) => setModal({ type: 'article', data: article })}
-            onOpenSupplier={(supplier) => setModal({ type: 'supplier', data: supplier })}
+            onOpenArticle={openArticle}
+            onOpenSupplier={openSupplier}
             onSponsorClick={handleSponsorClick}
           />
         )}
@@ -285,7 +194,7 @@ export default function App() {
         {currentPage === 'directory' && (
           <DirectoryPage
             subFilter={subFilter}
-            onOpenSupplier={(supplier) => setModal({ type: 'supplier', data: supplier })}
+            onOpenSupplier={openSupplier}
             onSponsorClick={handleSponsorClick}
           />
         )}
@@ -306,11 +215,21 @@ export default function App() {
         onOpenLegalModal={(doc) => setModal({ type: 'legal', doc })}
       />
 
+      <SearchPalette
+        open={search.open}
+        initialQuery={search.query}
+        onClose={closeSearch}
+        onOpenArticle={openArticle}
+        onOpenLegislation={openLegislation}
+        onOpenWebinar={openWebinar}
+        onOpenSupplier={openSupplier}
+      />
+
       <EditorialModal
         modal={modal}
         onClose={() => setModal(null)}
         onContactNavigate={() => navigate('contact')}
-        onOpenLegislation={(id) => navigate('legislation-detail', id)}
+        onOpenLegislation={openLegislation}
       />
     </div>
   );

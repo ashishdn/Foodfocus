@@ -1,14 +1,23 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 
 interface SectionHeadingProps {
   title: string;
+  /** small uppercase label above the title */
+  eyebrow?: string;
+  description?: string;
   variant?: 'light' | 'dark' | 'page';
   actionLabel?: string;
   onAction?: () => void;
 }
 
+/** Converts legacy ALL-CAPS headings ("LATEST ARTICLES") into sentence case. */
+const toSentence = (t: string) => (t === t.toUpperCase() ? t.charAt(0) + t.slice(1).toLowerCase() : t);
+
 export const SectionHeading: React.FC<SectionHeadingProps> = ({
   title,
+  eyebrow,
+  description,
   variant = 'light',
   actionLabel,
   onAction,
@@ -17,41 +26,32 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   const isPage = variant === 'page';
 
   return (
-    <div className="mb-7">
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-3">
+    <div className="mb-8 sm:mb-10 flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+      <div className="min-w-0">
+        {eyebrow && <span className={`ff-eyebrow ${isDark ? 'ff-eyebrow-light' : ''}`}>{eyebrow}</span>}
         <h2
-          className={`font-bold uppercase tracking-[0.04em] ${
-            isPage
-              ? 'text-[22px] sm:text-[26px] text-[#1C1C1C]'
-              : isDark
-              ? 'text-[15px] sm:text-[16px] text-white'
-              : 'text-[15px] sm:text-[16px] text-[#1C1C1C]'
-          }`}
+          className={`font-display font-medium tracking-[-0.02em] leading-[1.1] ${eyebrow ? 'mt-3' : ''} ${
+            isPage ? 'text-[34px] sm:text-[44px]' : 'text-[30px] sm:text-[40px]'
+          } ${isDark ? 'text-white' : 'text-text'}`}
         >
-          {title}
+          {toSentence(title)}
         </h2>
-        {actionLabel && onAction && (
-          <button
-            type="button"
-            onClick={onAction}
-            className={`px-4 py-1.5 text-[12px] font-semibold rounded-full border transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-              isDark
-                ? 'border-white/70 text-white hover:bg-white hover:text-[#1C1C1C]'
-                : 'border-[#333333]/60 text-[#333333] hover:border-[#9BC53D] hover:bg-[#9BC53D] hover:text-white'
-            }`}
-          >
-            {actionLabel}
-          </button>
+        {description && (
+          <p className={`mt-3 max-w-[56ch] ${isDark ? 'text-white/60' : 'text-muted'}`}>{description}</p>
         )}
       </div>
-      <div className="relative h-[3px] w-full">
-        <div
-          className={`absolute inset-x-0 bottom-0 h-px ${
-            isDark ? 'bg-white/25' : 'bg-[#DCDCDC]'
+      {actionLabel && onAction && (
+        <button
+          type="button"
+          onClick={onAction}
+          className={`inline-flex items-center gap-1.5 font-semibold text-[15px] cursor-pointer group ${
+            isDark ? 'text-lime' : 'text-text hover:text-lime-deep'
           }`}
-        />
-        <div className="relative h-[3px] w-10 bg-[#9BC53D]" />
-      </div>
+        >
+          {actionLabel}
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+        </button>
+      )}
     </div>
   );
 };

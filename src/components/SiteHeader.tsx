@@ -1,566 +1,375 @@
-import React, { useState } from 'react';
-import { ChevronDown, Menu, Search, X } from 'lucide-react';
-import { BRAND_ASSETS, LEGISLATION_NAV_ITEMS } from '../data/foodfocusData';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ArrowRight, ChevronDown, Menu, Search, X } from 'lucide-react';
+import { BRAND_ASSETS, LEGISLATION_NAV_ITEMS, LEGISLATION_UPDATES } from '../data/foodfocusData';
+import { daysUntil, formatIsoDate } from '../lib/legislation';
 import { PageId } from '../types';
-import { LeaderboardAdBanner } from './AdBanners';
-import { SocialIconRow } from './SocialIcons';
 
 interface SiteHeaderProps {
   currentPage: PageId;
   onNavigate: (page: PageId, subFilter?: string) => void;
-  onSearchSubmit: (query: string) => void;
-  onSocialClick: (network: string) => void;
-  onSponsorClick: (title: string, context: string) => void;
-  legislationDropdownPinned?: boolean;
-  onToggleLegislationPin?: () => void;
+  onOpenSearch: () => void;
+  onSubscribe: () => void;
 }
 
-const UTILITY_LINKS: { id: PageId; label: string }[] = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About us' },
-  { id: 'services', label: 'Our Services' },
-  { id: 'advertise', label: 'Advertise with us' },
-  { id: 'contact', label: 'Contact Us' },
+interface NavChild {
+  label: string;
+  hint?: string;
+  page: PageId;
+  filter?: string;
+}
+
+interface NavItem {
+  id: string;
+  label: string;
+  page: PageId;
+  filter?: string;
+  activeOn: PageId[];
+  children?: NavChild[];
+}
+
+const NAV: NavItem[] = [
+  {
+    id: 'legislation',
+    label: 'Legislation',
+    page: 'legislation',
+    activeOn: ['legislation', 'legislation-detail', 'helpful-links'],
+    children: [
+      ...LEGISLATION_NAV_ITEMS.filter((i) => i.id !== 'updates').map((i) => ({
+        label: i.label,
+        page: 'legislation' as PageId,
+        filter: i.id,
+      })),
+      { label: 'All legislation updates', hint: 'The full tracker', page: 'legislation', filter: 'updates' },
+      { label: 'Helpful links', hint: 'Regulators & official sources', page: 'helpful-links' },
+    ],
+  },
+  {
+    id: 'articles',
+    label: 'Insights',
+    page: 'articles',
+    activeOn: ['articles'],
+    children: [
+      { label: 'All articles', page: 'articles', filter: 'all' },
+      { label: 'Food Safety & HACCP', page: 'articles', filter: 'Food Safety & Quality' },
+      { label: 'Public Health & Compliance', page: 'articles', filter: 'Public Health & Compliance' },
+      { label: 'Legislation & Governance', page: 'articles', filter: 'Legislation & Governance' },
+    ],
+  },
+  {
+    id: 'news',
+    label: 'News',
+    page: 'news',
+    activeOn: ['news'],
+    children: [
+      { label: 'Industry news', page: 'news', filter: 'industry' },
+      { label: 'Supplier news', page: 'news', filter: 'supplier' },
+    ],
+  },
+  { id: 'webinars', label: 'Webinars', page: 'webinars', activeOn: ['webinars'] },
+  {
+    id: 'events',
+    label: 'Events & Training',
+    page: 'events',
+    activeOn: ['events', 'training'],
+    children: [
+      { label: 'Industry events', hint: 'Conferences & workshops', page: 'events' },
+      { label: 'HACCP & FSSC 22000 courses', page: 'training', filter: 'HACCP & FSSC 22000 Courses' },
+      { label: 'R638 Food Handler Hygiene', page: 'training', filter: 'R638 Food Handler Hygiene' },
+      { label: 'Internal Auditing Skills', page: 'training', filter: 'Internal Auditing Skills' },
+    ],
+  },
+  {
+    id: 'directory',
+    label: 'Directory',
+    page: 'directory',
+    activeOn: ['directory'],
+    children: [
+      { label: 'All suppliers', page: 'directory', filter: 'all' },
+      { label: 'Food testing laboratories', page: 'directory', filter: 'Food Testing Laboratories' },
+      { label: 'Certification bodies', page: 'directory', filter: 'Certification Bodies' },
+      { label: 'Instruments & calibration', page: 'directory', filter: 'Instruments & Calibration' },
+      { label: 'Packaging & hygiene', page: 'directory', filter: 'Packaging & Hygiene' },
+    ],
+  },
 ];
 
-export const SiteHeader: React.FC<SiteHeaderProps> = ({
-  currentPage,
-  onNavigate,
-  onSearchSubmit,
-  onSocialClick,
-  onSponsorClick,
-  legislationDropdownPinned = false,
-}) => {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(
-    legislationDropdownPinned ? 'legislation' : null
+const UTILITY_LINKS: { id: PageId; label: string }[] = [
+  { id: 'about', label: 'About' },
+  { id: 'services', label: 'Our services' },
+  { id: 'advertise', label: 'Advertise' },
+  { id: 'contact', label: 'Contact' },
+];
+
+export const SiteHeader: React.FC<SiteHeaderProps> = ({ currentPage, onNavigate, onOpenSearch, onSubscribe }) => {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerExpanded, setDrawerExpanded] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Nearest open comment period drives the alert strip
+  const alert = useMemo(
+    () =>
+      LEGISLATION_UPDATES.filter((u) => u.commentDeadline && daysUntil(u.commentDeadline) >= 0).sort(
+        (a, b) => (a.commentDeadline! < b.commentDeadline! ? -1 : 1)
+      )[0],
+    []
   );
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>('legislation');
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
+  const alertDays = alert?.commentDeadline ? daysUntil(alert.commentDeadline) : 0;
 
-  const handleNavClick = (page: PageId, subFilter?: string) => {
-    onNavigate(page, subFilter);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    if (!drawerOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDrawerOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [drawerOpen]);
+
+  const go = (page: PageId, filter?: string) => {
+    onNavigate(page, filter);
     setOpenDropdown(null);
-    setMobileMenuOpen(false);
-  };
-
-  const handleSearchForm = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchInput.trim()) {
-      onSearchSubmit(searchInput.trim());
-      setSearchOpen(false);
-    }
+    setDrawerOpen(false);
   };
 
   return (
-    <header className="w-full relative z-40">
-      {/* 1. Top Utility Bar (Black, ~40px) */}
-      <div className="bg-[#000000] text-white border-b border-white/10">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 min-h-[40px] py-1.5 flex flex-wrap items-center justify-between gap-2">
-          <nav aria-label="Utility navigation" className="hidden sm:flex items-center flex-wrap gap-x-2 text-[13px]">
-            {UTILITY_LINKS.map((link, idx) => {
-              const isActive = currentPage === link.id;
+    <>
+      {/* Alert + utility strip */}
+      <div className="bg-[#0A1610] text-[#DFE8DF] text-[13.5px]">
+        <div className="ff-container flex items-center justify-between gap-4 min-h-[40px] py-2">
+          {alert ? (
+            <button
+              type="button"
+              onClick={() => go('legislation-detail', alert.id)}
+              className="flex items-center gap-2.5 text-left min-w-0 cursor-pointer group"
+            >
+              <span className="ff-live-dot shrink-0" aria-hidden="true" />
+              <span className="truncate">
+                <strong className="text-white font-semibold">Open for comment:</strong>{' '}
+                <span className="hidden sm:inline">{alert.tag} — </span>
+                {alert.gazetteRef.replace('Gov. Gazette Notice ', '')} closes{' '}
+                {formatIsoDate(alert.commentDeadline!)}
+                <span className="text-[#F5C878]"> · {alertDays} day{alertDays === 1 ? '' : 's'} left</span>
+              </span>
+              <span className="hidden md:inline-flex items-center gap-1 text-lime font-semibold shrink-0 group-hover:gap-2 transition-all">
+                Read brief <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </button>
+          ) : (
+            <span>South Africa's food compliance platform</span>
+          )}
+          <nav aria-label="Company" className="hidden lg:flex items-center gap-5 shrink-0">
+            {UTILITY_LINKS.map((l) => (
+              <button
+                key={l.id}
+                type="button"
+                onClick={() => go(l.id)}
+                className={`cursor-pointer transition-colors ${
+                  currentPage === l.id ? 'text-lime font-semibold' : 'text-white/70 hover:text-white'
+                }`}
+              >
+                {l.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Main header */}
+      <header
+        className={`site-header sticky top-0 z-40 bg-ink text-white transition-shadow ${
+          scrolled ? 'shadow-[0_8px_30px_rgba(0,0,0,.25)]' : ''
+        }`}
+      >
+        <div className="ff-container flex items-center gap-4 xl:gap-5 2xl:gap-8 h-[76px]">
+          <button
+            type="button"
+            onClick={() => go('home')}
+            className="shrink-0 cursor-pointer rounded-lg"
+            aria-label="foodfocus — The Right Way, home"
+          >
+            <img src={BRAND_ASSETS.logoPath} alt="foodfocus — The Right Way" className="h-[44px] sm:h-[48px] w-auto object-contain" />
+          </button>
+
+          <nav aria-label="Main" className="hidden xl:flex items-center gap-0 2xl:gap-1 mr-auto min-w-0">
+            {NAV.map((item) => {
+              const active = item.activeOn.includes(currentPage);
+              const open = openDropdown === item.id;
               return (
-                <React.Fragment key={link.id}>
-                  {idx > 0 && (
-                    <span className="text-white/40 select-none" aria-hidden="true">
-                      ·
-                    </span>
-                  )}
+                <div
+                  key={item.id}
+                  className="relative"
+                  onMouseEnter={() => item.children && setOpenDropdown(item.id)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
                   <button
                     type="button"
-                    onClick={() => handleNavClick(link.id)}
-                    className={`transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                      isActive
-                        ? 'text-[#9BC53D] font-semibold'
-                        : 'text-white/90 hover:text-[#9BC53D]'
+                    onClick={() => (item.children ? setOpenDropdown(open ? null : item.id) : go(item.page, item.filter))}
+                    aria-expanded={item.children ? open : undefined}
+                    aria-haspopup={item.children ? 'menu' : undefined}
+                    className={`relative inline-flex items-center gap-1 px-2.5 2xl:px-3 py-2.5 rounded-full text-[15px] whitespace-nowrap cursor-pointer transition-colors ${
+                      active ? 'text-white font-semibold' : 'text-white/80 hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    {link.label}
+                    {item.label}
+                    {item.id === 'legislation' && (
+                      <span className="ml-1 inline-grid place-items-center min-w-5 h-5 px-1.5 rounded-full bg-lime text-ink text-[11px] font-bold">
+                        {LEGISLATION_UPDATES.filter((u) => u.status === 'new' || u.status === 'open-for-comment').length}
+                      </span>
+                    )}
+                    {item.children && <ChevronDown className={`w-3.5 h-3.5 opacity-70 transition-transform ${open ? 'rotate-180' : ''}`} />}
+                    {active && <span className="absolute left-3 right-3 -bottom-[1px] h-[2px] rounded bg-lime" />}
                   </button>
-                </React.Fragment>
+
+                  {item.children && open && (
+                    <div className="absolute left-0 top-full pt-2 z-50">
+                      <div role="menu" className="w-[320px] bg-white text-text rounded-2xl shadow-lift border border-line p-2 animate-rise">
+                        {item.children.map((c) => (
+                          <button
+                            key={c.label}
+                            type="button"
+                            role="menuitem"
+                            onClick={() => go(c.page, c.filter)}
+                            className="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-lime-soft transition-colors cursor-pointer group flex items-center justify-between gap-3"
+                          >
+                            <span>
+                              <span className="block text-[14.5px] font-medium leading-snug">{c.label}</span>
+                              {c.hint && <span className="block text-[12.5px] text-muted">{c.hint}</span>}
+                            </span>
+                            <ArrowRight className="w-4 h-4 text-lime-deep opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </nav>
 
-          {/* Compact mobile utility label */}
-          <div className="flex sm:hidden items-center gap-3 text-[12px] text-white/85">
+          <div className="flex items-center gap-2.5 ml-auto xl:ml-0 shrink-0">
             <button
               type="button"
-              onClick={() => handleNavClick('about')}
-              className={`cursor-pointer ${currentPage === 'about' ? 'text-[#9BC53D] font-semibold' : ''}`}
+              onClick={onOpenSearch}
+              aria-label="Search foodfocus"
+              className="inline-flex items-center gap-2.5 h-11 w-11 min-[1480px]:w-auto justify-center min-[1480px]:justify-start min-[1480px]:min-w-[210px] min-[1480px]:px-4 whitespace-nowrap rounded-full border border-white/20 text-white/70 hover:border-white/60 hover:text-white transition-colors cursor-pointer"
             >
-              About us
+              <Search className="w-4 h-4" />
+              <span className="hidden min-[1480px]:inline text-[14px]">Search R638, HACCP…</span>
+              <kbd className="hidden min-[1480px]:inline ml-auto font-mono text-[11px] px-1.5 rounded border border-white/20 text-white/50">/</kbd>
             </button>
-            <span className="text-white/35">·</span>
+            <button type="button" onClick={onSubscribe} className="ff-btn ff-btn-lime hidden sm:inline-flex px-5">
+              Subscribe
+            </button>
             <button
               type="button"
-              onClick={() => handleNavClick('advertise')}
-              className={`cursor-pointer ${currentPage === 'advertise' ? 'text-[#9BC53D] font-semibold' : ''}`}
-            >
-              Advertise
-            </button>
-            <span className="text-white/35">·</span>
-            <button
-              type="button"
-              onClick={() => handleNavClick('contact')}
-              className={`cursor-pointer ${currentPage === 'contact' ? 'text-[#9BC53D] font-semibold' : ''}`}
-            >
-              Contact
-            </button>
-          </div>
-
-          <SocialIconRow variant="utility" onSelect={onSocialClick} />
-        </div>
-      </div>
-
-      {/* 2. Brand Header (Charcoal #1C1C1C, ~140px) */}
-      <div className="bg-[#1C1C1C] text-white">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-0 lg:h-[140px] flex flex-col lg:flex-row items-center justify-between gap-4">
-          <button
-            type="button"
-            onClick={() => handleNavClick('home')}
-            className="shrink-0 focus-visible:outline-2 focus-visible:outline-[#9BC53D] rounded-[2px] cursor-pointer"
-            aria-label="foodfocus — The Right Way Home"
-          >
-            <img
-              src={BRAND_ASSETS.logoPath}
-              alt="foodfocus — THE RIGHT WAY"
-              className="h-[58px] sm:h-[68px] lg:h-[78px] w-auto object-contain"
-            />
-          </button>
-
-          <LeaderboardAdBanner onSponsorClick={onSponsorClick} />
-        </div>
-      </div>
-
-      {/* 3. Main Navigation Bar (Black, ~50px, 3px lime-green bottom border) */}
-      <div className="bg-[#000000] text-white border-b-[3px] border-[#9BC53D]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-[50px] flex items-center justify-between gap-4">
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-5 min-w-0">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-              aria-label="Open full site index"
-              className="p-1.5 -ml-1.5 text-white hover:text-[#9BC53D] transition-colors cursor-pointer shrink-0"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={drawerOpen}
+              className="xl:hidden inline-grid place-items-center h-11 w-11 rounded-full border border-white/20 hover:border-white/60 cursor-pointer"
             >
               <Menu className="w-5 h-5" />
             </button>
-
-            <nav aria-label="Main navigation" className="flex items-center gap-5 text-[15px] font-bold">
-              <button
-                type="button"
-                onClick={() => handleNavClick('home')}
-                className={`whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                  currentPage === 'home' ? 'text-[#9BC53D]' : 'text-white hover:text-[#9BC53D]'
-                }`}
-              >
-                Home
-              </button>
-
-              {/* Articles Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenDropdown('articles')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setOpenDropdown((prev) => (prev === 'articles' ? null : 'articles'))
-                  }
-                  className={`inline-flex items-center gap-1 whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                    currentPage === 'articles' ? 'text-[#9BC53D]' : 'text-white hover:text-[#9BC53D]'
-                  }`}
-                >
-                  <span>Articles</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {openDropdown === 'articles' && (
-                  <div className="absolute left-0 top-full w-64 bg-[#1C1C1C] border border-white/15 border-t-2 border-t-[#9BC53D] shadow-xl py-1.5 z-50">
-                    {[
-                      { label: 'All Compliance Articles', filter: 'all' },
-                      { label: 'Food Safety & HACCP', filter: 'Food Safety & Quality' },
-                      { label: 'Public Health & Compliance', filter: 'Public Health & Compliance' },
-                      { label: 'Legislation & Governance', filter: 'Legislation & Governance' },
-                    ].map((item) => (
-                      <button
-                        key={item.label}
-                        type="button"
-                        onClick={() => handleNavClick('articles', item.filter)}
-                        className="w-full text-left px-4 py-2.5 text-[13.5px] font-medium text-white/90 hover:bg-[#9BC53D] hover:text-black transition-colors cursor-pointer"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Legislation Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenDropdown('legislation')}
-                onMouseLeave={() => {
-                  if (!legislationDropdownPinned) setOpenDropdown(null);
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setOpenDropdown((prev) => (prev === 'legislation' ? null : 'legislation'))
-                  }
-                  aria-expanded={openDropdown === 'legislation'}
-                  className={`inline-flex items-center gap-1 whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                    currentPage === 'legislation' || currentPage === 'legislation-detail' || currentPage === 'helpful-links' || openDropdown === 'legislation'
-                      ? 'text-[#9BC53D]'
-                      : 'text-white hover:text-[#9BC53D]'
-                  }`}
-                >
-                  <span>Legislation</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {openDropdown === 'legislation' && (
-                  <div className="absolute left-0 top-full w-[330px] bg-[#1C1C1C] border border-white/15 border-t-2 border-t-[#9BC53D] shadow-xl py-1.5 z-50">
-                    {LEGISLATION_NAV_ITEMS.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => handleNavClick('legislation', item.id)}
-                        className="w-full text-left px-4 py-2.5 text-[13.5px] font-medium text-white/95 hover:bg-[#9BC53D] hover:text-black transition-colors border-b border-white/5 cursor-pointer"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => handleNavClick('helpful-links')}
-                      className="w-full text-left px-4 py-2.5 text-[13.5px] font-bold text-[#9BC53D] hover:bg-[#9BC53D] hover:text-black transition-colors cursor-pointer"
-                    >
-                      Helpful Links »
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* News Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenDropdown('news')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenDropdown((prev) => (prev === 'news' ? null : 'news'))}
-                  className={`inline-flex items-center gap-1 whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                    currentPage === 'news' ? 'text-[#9BC53D]' : 'text-white hover:text-[#9BC53D]'
-                  }`}
-                >
-                  <span>News</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {openDropdown === 'news' && (
-                  <div className="absolute left-0 top-full w-56 bg-[#1C1C1C] border border-white/15 border-t-2 border-t-[#9BC53D] shadow-xl py-1.5 z-50">
-                    <button
-                      type="button"
-                      onClick={() => handleNavClick('news', 'industry')}
-                      className="w-full text-left px-4 py-2.5 text-[13.5px] font-medium text-white/90 hover:bg-[#9BC53D] hover:text-black transition-colors cursor-pointer"
-                    >
-                      Latest Industry News
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleNavClick('news', 'supplier')}
-                      className="w-full text-left px-4 py-2.5 text-[13.5px] font-medium text-white/90 hover:bg-[#9BC53D] hover:text-black transition-colors cursor-pointer"
-                    >
-                      Supplier News
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('webinars')}
-                className={`whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                  currentPage === 'webinars' ? 'text-[#9BC53D]' : 'text-white hover:text-[#9BC53D]'
-                }`}
-              >
-                Webinars
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('events')}
-                className={`whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                  currentPage === 'events' ? 'text-[#9BC53D]' : 'text-white hover:text-[#9BC53D]'
-                }`}
-              >
-                Industry Events
-              </button>
-
-              {/* Training Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenDropdown('training')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setOpenDropdown((prev) => (prev === 'training' ? null : 'training'))
-                  }
-                  className={`inline-flex items-center gap-1 whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                    currentPage === 'training' ? 'text-[#9BC53D]' : 'text-white hover:text-[#9BC53D]'
-                  }`}
-                >
-                  <span>Training</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {openDropdown === 'training' && (
-                  <div className="absolute left-0 top-full w-60 bg-[#1C1C1C] border border-white/15 border-t-2 border-t-[#9BC53D] shadow-xl py-1.5 z-50">
-                    {[
-                      'HACCP & FSSC 22000 Courses',
-                      'R638 Food Handler Hygiene',
-                      'Internal Auditing Skills',
-                    ].map((course) => (
-                      <button
-                        key={course}
-                        type="button"
-                        onClick={() => handleNavClick('training', course)}
-                        className="w-full text-left px-4 py-2.5 text-[13.5px] font-medium text-white/90 hover:bg-[#9BC53D] hover:text-black transition-colors cursor-pointer"
-                      >
-                        {course}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Supplier Directory Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenDropdown('directory')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <button
-                  type="button"
-                  onClick={() =>
-                    setOpenDropdown((prev) => (prev === 'directory' ? null : 'directory'))
-                  }
-                  className={`inline-flex items-center gap-1 whitespace-nowrap shrink-0 py-3 transition-colors cursor-pointer ${
-                    currentPage === 'directory'
-                      ? 'text-[#9BC53D]'
-                      : 'text-white hover:text-[#9BC53D]'
-                  }`}
-                >
-                  <span>Supplier directory</span>
-                  <ChevronDown className="w-3.5 h-3.5 opacity-80" />
-                </button>
-
-                {openDropdown === 'directory' && (
-                  <div className="absolute right-0 top-full w-64 bg-[#1C1C1C] border border-white/15 border-t-2 border-t-[#9BC53D] shadow-xl py-1.5 z-50">
-                    {[
-                      { label: 'All Directory Listings', cat: 'all' },
-                      { label: 'Food Testing Laboratories', cat: 'Food Testing Laboratories' },
-                      { label: 'Certification Bodies', cat: 'Certification Bodies' },
-                      { label: 'Instruments & Calibration', cat: 'Instruments & Calibration' },
-                      { label: 'Packaging & Hygiene', cat: 'Packaging & Hygiene' },
-                    ].map((item) => (
-                      <button
-                        key={item.label}
-                        type="button"
-                        onClick={() => handleNavClick('directory', item.cat)}
-                        className="w-full text-left px-4 py-2.5 text-[13.5px] font-medium text-white/90 hover:bg-[#9BC53D] hover:text-black transition-colors cursor-pointer"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </nav>
           </div>
-
-          {/* Mobile Hamburger Trigger */}
-          <div className="flex lg:hidden items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="inline-flex items-center gap-2 py-2 text-white hover:text-[#9BC53D] font-bold text-[14px] uppercase tracking-wider cursor-pointer"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              <span>{mobileMenuOpen ? 'Close' : 'Menu'}</span>
-            </button>
-          </div>
-
-          {/* Far-Right Search Trigger */}
-          <button
-            type="button"
-            onClick={() => setSearchOpen((prev) => !prev)}
-            aria-label="Search foodfocus"
-            className="p-2 text-white hover:text-[#9BC53D] transition-colors cursor-pointer shrink-0"
-          >
-            {searchOpen ? <X className="w-5 h-5" /> : <Search className="w-5 h-5" />}
-          </button>
         </div>
+      </header>
 
-        {/* Inline Search Bar Drawer */}
-        {searchOpen && (
-          <div className="bg-[#1C1C1C] border-t border-white/10">
-            <form
-              onSubmit={handleSearchForm}
-              className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-2"
-            >
-              <input
-                type="search"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search food safety articles, R638, R3337, webinars, suppliers..."
-                className="flex-1 bg-white text-[#1C1C1C] text-[14px] px-3.5 py-2 rounded-[2px] focus:outline-2 focus:outline-[#9BC53D]"
-                autoFocus
-              />
-              <button
-                type="submit"
-                className="bg-[#9BC53D] hover:bg-[#84AC2D] text-black font-bold text-[13px] uppercase tracking-wider px-5 py-2 rounded-[2px] cursor-pointer whitespace-nowrap"
-              >
-                Search
-              </button>
-            </form>
-          </div>
-        )}
-
-        {/* Mobile / Full Drawer Navigation */}
-        {mobileMenuOpen && (
-          <div className="bg-[#141414] border-t border-white/15 max-h-[80vh] overflow-y-auto">
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-1 text-[15px] font-semibold">
+      {/* Mobile drawer */}
+      {drawerOpen && (
+        <div className="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label="Menu">
+          <div className="absolute inset-0 bg-ink/60 animate-fade" onClick={() => setDrawerOpen(false)} />
+          <div className="absolute inset-y-0 right-0 w-full max-w-[400px] bg-paper flex flex-col animate-rise overflow-y-auto">
+            <div className="flex items-center justify-between px-5 h-[76px] bg-ink shrink-0">
+              <img src={BRAND_ASSETS.logoPath} alt="foodfocus" className="h-[40px] w-auto" />
               <button
                 type="button"
-                onClick={() => handleNavClick('home')}
-                className={`w-full text-left py-2.5 px-2 border-b border-white/10 cursor-pointer ${
-                  currentPage === 'home' ? 'text-[#9BC53D]' : 'text-white'
-                }`}
+                onClick={() => setDrawerOpen(false)}
+                aria-label="Close menu"
+                className="inline-grid place-items-center h-11 w-11 rounded-full border border-white/20 text-white cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <nav aria-label="Mobile" className="px-5 py-3">
+              <button
+                type="button"
+                onClick={() => go('home')}
+                className="w-full text-left py-4 border-b border-line font-display text-[24px] cursor-pointer"
               >
                 Home
               </button>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('articles')}
-                className={`w-full text-left py-2.5 px-2 border-b border-white/10 cursor-pointer ${
-                  currentPage === 'articles' ? 'text-[#9BC53D]' : 'text-white'
-                }`}
-              >
-                Articles
-              </button>
-
-              <div className="border-b border-white/10">
-                <button
-                  type="button"
-                  onClick={() =>
-                    setMobileExpanded((prev) => (prev === 'legislation' ? null : 'legislation'))
-                  }
-                  className="w-full flex items-center justify-between py-2.5 px-2 text-white cursor-pointer"
-                >
-                  <span className={currentPage.startsWith('legislation') || currentPage === 'helpful-links' ? 'text-[#9BC53D]' : ''}>
-                    Legislation
-                  </span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${
-                      mobileExpanded === 'legislation' ? 'rotate-180 text-[#9BC53D]' : ''
-                    }`}
-                  />
-                </button>
-                {mobileExpanded === 'legislation' && (
-                  <div className="pl-4 pb-2 space-y-1 bg-[#1C1C1C]">
-                    {LEGISLATION_NAV_ITEMS.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => handleNavClick('legislation', item.id)}
-                        className="w-full text-left py-2 px-2 text-[13.5px] font-normal text-white/85 hover:text-[#9BC53D] cursor-pointer"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
+              {NAV.map((item) => {
+                const expanded = drawerExpanded === item.id;
+                return (
+                  <div key={item.id} className="border-b border-line">
                     <button
                       type="button"
-                      onClick={() => handleNavClick('helpful-links')}
-                      className="w-full text-left py-2 px-2 text-[13.5px] font-semibold text-[#9BC53D] cursor-pointer"
+                      onClick={() => (item.children ? setDrawerExpanded(expanded ? null : item.id) : go(item.page, item.filter))}
+                      aria-expanded={item.children ? expanded : undefined}
+                      className={`w-full flex items-center justify-between py-4 font-display text-[24px] cursor-pointer ${
+                        item.activeOn.includes(currentPage) ? 'text-lime-deep' : ''
+                      }`}
                     >
-                      Helpful Links
+                      {item.label}
+                      {item.children && <ChevronDown className={`w-5 h-5 transition-transform ${expanded ? 'rotate-180' : ''}`} />}
                     </button>
+                    {item.children && expanded && (
+                      <div className="pb-3 -mt-1 animate-rise">
+                        {item.children.map((c) => (
+                          <button
+                            key={c.label}
+                            type="button"
+                            onClick={() => go(c.page, c.filter)}
+                            className="w-full text-left py-2.5 pl-3 text-[15px] text-muted hover:text-text border-l-2 border-line hover:border-lime cursor-pointer"
+                          >
+                            {c.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                );
+              })}
+            </nav>
 
+            <div className="mt-auto px-5 pb-8 pt-4 grid gap-2.5">
               <button
                 type="button"
-                onClick={() => handleNavClick('news')}
-                className="w-full text-left py-2.5 px-2 border-b border-white/10 text-white cursor-pointer"
+                onClick={() => {
+                  setDrawerOpen(false);
+                  onOpenSearch();
+                }}
+                className="ff-btn ff-btn-ghost"
               >
-                News
+                <Search className="w-4 h-4" /> Search
               </button>
-
               <button
                 type="button"
-                onClick={() => handleNavClick('webinars')}
-                className={`w-full text-left py-2.5 px-2 border-b border-white/10 cursor-pointer ${
-                  currentPage === 'webinars' ? 'text-[#9BC53D]' : 'text-white'
-                }`}
+                onClick={() => {
+                  setDrawerOpen(false);
+                  onSubscribe();
+                }}
+                className="ff-btn ff-btn-ink"
               >
-                Webinars
+                Get the Monday Brief
               </button>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('events')}
-                className="w-full text-left py-2.5 px-2 border-b border-white/10 text-white cursor-pointer"
-              >
-                Industry Events
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('training')}
-                className="w-full text-left py-2.5 px-2 border-b border-white/10 text-white cursor-pointer"
-              >
-                Training
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleNavClick('directory')}
-                className="w-full text-left py-2.5 px-2 border-b border-white/10 text-white cursor-pointer"
-              >
-                Supplier directory
-              </button>
-
-              <div className="pt-3 grid grid-cols-2 gap-2 text-[13px] font-normal">
-                {UTILITY_LINKS.map((link) => (
-                  <button
-                    key={link.id}
-                    type="button"
-                    onClick={() => handleNavClick(link.id)}
-                    className={`text-left py-1.5 px-2 rounded-[2px] cursor-pointer ${
-                      currentPage === link.id ? 'text-[#9BC53D] font-semibold' : 'text-white/75'
-                    }`}
-                  >
-                    {link.label}
+              <div className="flex flex-wrap gap-x-5 gap-y-2 pt-3 text-[14px] text-muted">
+                {UTILITY_LINKS.map((l) => (
+                  <button key={l.id} type="button" onClick={() => go(l.id)} className="cursor-pointer hover:text-text">
+                    {l.label}
                   </button>
                 ))}
               </div>
             </div>
           </div>
-        )}
-      </div>
-    </header>
+        </div>
+      )}
+    </>
   );
 };

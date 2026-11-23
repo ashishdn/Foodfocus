@@ -54,12 +54,12 @@ export const BookmarkButton: React.FC<{
         type="button"
         onClick={onToggle}
         aria-pressed={saved}
-        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-[3px] text-[13px] font-bold border transition-colors cursor-pointer ${
+        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-bold border transition-colors cursor-pointer ${
           saved
-            ? 'bg-[#9BC53D] border-[#9BC53D] text-[#111111]'
+            ? 'bg-[#9BC53D] border-[#9BC53D] text-[#0F1F17]'
             : tone === 'dark'
             ? 'border-white/40 text-white hover:border-[#9BC53D] hover:text-[#9BC53D]'
-            : 'border-[#CFCFCF] text-[#1C1C1C] hover:border-[#9BC53D]'
+            : 'border-[#CFCCBE] text-[#0F1F17] hover:border-[#9BC53D]'
         }`}
       >
         <Icon className="w-4 h-4" />
@@ -78,7 +78,7 @@ export const BookmarkButton: React.FC<{
       aria-label={saved ? 'Remove from saved legislation' : 'Save legislation'}
       title={saved ? 'Saved' : 'Save for later'}
       className={`p-2 rounded-full transition-colors cursor-pointer shrink-0 ${
-        saved ? 'text-[#6F9321] bg-[#EAF5D3]' : 'text-[#8A8A8A] hover:text-[#1C1C1C] hover:bg-[#F2F2F2]'
+        saved ? 'text-[#4F7A0F] bg-[#EAF5D3]' : 'text-[#8A948D] hover:text-[#0F1F17] hover:bg-[#F7F6F1]'
       }`}
     >
       <Icon className="w-[18px] h-[18px]" />
@@ -95,7 +95,7 @@ export const CommentDeadline: React.FC<{ iso: string; compact?: boolean }> = ({ 
     <span
       className={`inline-flex items-center gap-1.5 font-semibold ${
         compact ? 'text-[12px]' : 'text-[13px]'
-      } ${closed ? 'text-[#8A8A8A]' : days <= 14 ? 'text-[#B3261E]' : 'text-[#8A4B00]'}`}
+      } ${closed ? 'text-[#8A948D]' : days <= 14 ? 'text-[#B3261E]' : 'text-[#8A4B00]'}`}
     >
       <Clock className="w-3.5 h-3.5" />
       {closed
@@ -125,7 +125,7 @@ const Highlight: React.FC<{ text: string; term?: string }> = ({ text, term }) =>
     <>
       {parts.map((part, i) =>
         part.toLowerCase() === term.toLowerCase() ? (
-          <mark key={i} className="bg-[#9BC53D]/30 text-inherit rounded-[2px] px-0.5">
+          <mark key={i} className="bg-[#9BC53D]/30 text-inherit rounded-lg px-0.5">
             {part}
           </mark>
         ) : (
@@ -148,7 +148,7 @@ export const LegislationCard: React.FC<LegislationCardProps> = ({
   const isList = layout === 'list';
   return (
     <article
-      className={`group relative bg-white border border-[#E4E4E4] rounded-[6px] transition-all duration-200 hover:border-[#9BC53D] hover:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] flex flex-col ${
+      className={`group relative bg-white border border-[#E3E1D6] rounded-xl transition-all duration-200 hover:border-[#9BC53D] hover:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.25)] flex flex-col ${
         item.important ? 'ring-1 ring-[#9BC53D]/40' : ''
       }`}
     >
@@ -160,11 +160,11 @@ export const LegislationCard: React.FC<LegislationCardProps> = ({
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={item.status} />
-            <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#5B6067] bg-[#F4F4F4] rounded-full px-2 py-0.5">
+            <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#183025] bg-[#F7F6F1] rounded-full px-2 py-0.5">
               {item.regulationType}
             </span>
             {item.important && (
-              <span className="text-[10.5px] font-extrabold uppercase tracking-[0.08em] text-[#111111] bg-[#9BC53D] rounded-full px-2 py-0.5">
+              <span className="text-[10.5px] font-extrabold uppercase tracking-[0.08em] text-[#0F1F17] bg-[#9BC53D] rounded-full px-2 py-0.5">
                 Important
               </span>
             )}
@@ -172,17 +172,17 @@ export const LegislationCard: React.FC<LegislationCardProps> = ({
           <BookmarkButton saved={saved} onToggle={onToggleSave} />
         </div>
 
-        <h3 className={`font-bold text-[#1C1C1C] leading-snug mb-2 ${isList ? 'text-[18px]' : 'text-[16.5px]'}`}>
+        <h3 className={`font-bold text-[#0F1F17] leading-snug mb-2 ${isList ? 'text-[18px]' : 'text-[16.5px]'}`}>
           <button
             type="button"
             onClick={onOpen}
-            className="text-left hover:text-[#5E7F1A] transition-colors cursor-pointer after:absolute after:inset-0 after:content-['']"
+            className="text-left hover:text-[#4F7A0F] transition-colors cursor-pointer after:absolute after:inset-0 after:content-['']"
           >
             <Highlight text={item.title} term={highlightTerm} />
           </button>
         </h3>
 
-        <p className={`text-[14px] text-[#4A4A4A] leading-[1.6] mb-4 ${isList ? '' : 'line-clamp-3'}`}>
+        <p className={`text-[14px] text-[#3F4A43] leading-[1.6] mb-4 ${isList ? '' : 'line-clamp-3'}`}>
           <Highlight text={item.excerpt} term={highlightTerm} />
         </p>
 
@@ -192,7 +192,7 @@ export const LegislationCard: React.FC<LegislationCardProps> = ({
           </div>
         )}
 
-        <div className="mt-auto pt-3 border-t border-[#EFEFEF] flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[12.5px] text-[#6B6B6B]">
+        <div className="mt-auto pt-3 border-t border-[#E3E1D6] flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[12.5px] text-[#5B675F]">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span className="inline-flex items-center gap-1.5">
               <CalendarDays className="w-3.5 h-3.5" />
@@ -203,10 +203,10 @@ export const LegislationCard: React.FC<LegislationCardProps> = ({
               {item.gazetteRef}
             </span>
             {categoryLabel && isList && (
-              <span className="text-[#6F9321] font-semibold">{categoryLabel}</span>
+              <span className="text-[#4F7A0F] font-semibold">{categoryLabel}</span>
             )}
           </div>
-          <span className="inline-flex items-center gap-1 font-bold text-[#1C1C1C] group-hover:text-[#5E7F1A] transition-colors">
+          <span className="inline-flex items-center gap-1 font-bold text-[#0F1F17] group-hover:text-[#4F7A0F] transition-colors">
             Read brief <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
           </span>
         </div>
@@ -250,18 +250,18 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
   };
 
   const shell = dark
-    ? 'bg-[#1C1C1C] text-white border-[#2C2C2C]'
-    : 'bg-[#F7FAF0] text-[#1C1C1C] border-[#DCEBB8]';
+    ? 'bg-[#0F1F17] text-white border-[#2C2C2C]'
+    : 'bg-[#F7FAF0] text-[#0F1F17] border-[#DCEBB8]';
 
   if (subscription) {
     return (
-      <div className={`rounded-[6px] border p-5 ${shell}`}>
+      <div className={`rounded-xl border p-5 ${shell}`}>
         <div className="flex items-center gap-2 mb-2">
           <CheckCircle2 className="w-5 h-5 text-[#9BC53D]" />
           <h3 className="text-[15px] font-bold">You&rsquo;re subscribed</h3>
         </div>
-        <p className={`text-[13px] leading-relaxed ${dark ? 'text-white/75' : 'text-[#4A4A4A]'}`}>
-          Alerts go to <strong className={dark ? 'text-white' : 'text-[#1C1C1C]'}>{subscription.email}</strong>{' '}
+        <p className={`text-[13px] leading-relaxed ${dark ? 'text-white/75' : 'text-[#3F4A43]'}`}>
+          Alerts go to <strong className={dark ? 'text-white' : 'text-[#0F1F17]'}>{subscription.email}</strong>{' '}
           ({subscription.frequency}) for: {subscription.topics.join(', ')}.
           {subscription.newsletter && ' You will also receive the Food Focus newsletter.'}
         </p>
@@ -269,7 +269,7 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
           type="button"
           onClick={() => setSubscription(null)}
           className={`mt-3 text-[12.5px] font-bold underline underline-offset-2 cursor-pointer ${
-            dark ? 'text-[#9BC53D]' : 'text-[#5E7F1A]'
+            dark ? 'text-[#9BC53D]' : 'text-[#4F7A0F]'
           }`}
         >
           Change preferences or unsubscribe
@@ -279,34 +279,34 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
   }
 
   return (
-    <form onSubmit={submit} className={`rounded-[6px] border p-5 ${shell}`} noValidate>
+    <form onSubmit={submit} className={`rounded-xl border p-5 ${shell}`} noValidate>
       <div className="flex items-center gap-2.5 mb-1.5">
-        <span className="w-8 h-8 rounded-full bg-[#9BC53D] text-[#111111] flex items-center justify-center">
+        <span className="w-8 h-8 rounded-full bg-[#9BC53D] text-[#0F1F17] flex items-center justify-center">
           <Bell className="w-4 h-4" />
         </span>
         <h3 className="text-[16px] font-bold leading-tight">Legislation alerts</h3>
       </div>
-      <p className={`text-[13px] leading-relaxed mb-4 ${dark ? 'text-white/70' : 'text-[#555555]'}`}>
+      <p className={`text-[13px] leading-relaxed mb-4 ${dark ? 'text-white/70' : 'text-[#5B675F]'}`}>
         Get an email when new regulations, amendments or comment periods are published.
       </p>
 
       <label className="block">
         <span className="sr-only">Email address</span>
         <div className="relative">
-          <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8A8A8A]" />
+          <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8A948D]" />
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@company.co.za"
             autoComplete="email"
-            className="w-full bg-white text-[#1C1C1C] text-[14px] pl-9 pr-3 py-2.5 rounded-[3px] border border-[#D5D5D5] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
+            className="w-full bg-white text-[#0F1F17] text-[14px] pl-9 pr-3 py-2.5 rounded-lg border border-[#CFCCBE] focus:outline-none focus:ring-2 focus:ring-[#9BC53D]"
           />
         </div>
       </label>
 
       <fieldset className="mt-4">
-        <legend className={`text-[11.5px] font-bold uppercase tracking-[0.08em] mb-2 ${dark ? 'text-white/60' : 'text-[#5B6067]'}`}>
+        <legend className={`text-[11.5px] font-bold uppercase tracking-[0.08em] mb-2 ${dark ? 'text-white/60' : 'text-[#183025]'}`}>
           Topics
         </legend>
         <div className="flex flex-wrap gap-1.5">
@@ -320,10 +320,10 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
                 onClick={() => setTopics((prev) => (on ? prev.filter((x) => x !== t.id) : [...prev, t.id]))}
                 className={`text-[12px] font-semibold px-2.5 py-1 rounded-full border transition-colors cursor-pointer ${
                   on
-                    ? 'bg-[#9BC53D] border-[#9BC53D] text-[#111111]'
+                    ? 'bg-[#9BC53D] border-[#9BC53D] text-[#0F1F17]'
                     : dark
                     ? 'border-white/25 text-white/80 hover:border-white/60'
-                    : 'border-[#CFCFCF] text-[#4A4A4A] hover:border-[#9BC53D]'
+                    : 'border-[#CFCCBE] text-[#3F4A43] hover:border-[#9BC53D]'
                 }`}
               >
                 {t.id}
@@ -333,19 +333,19 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
         </div>
       </fieldset>
 
-      <div className="mt-4 grid grid-cols-3 gap-1 p-1 rounded-[4px] bg-black/10">
+      <div className="mt-4 grid grid-cols-3 gap-1 p-1 rounded-lg bg-black/10">
         {(['instant', 'weekly', 'monthly'] as const).map((f) => (
           <button
             key={f}
             type="button"
             onClick={() => setFrequency(f)}
             aria-pressed={frequency === f}
-            className={`text-[12px] font-bold capitalize py-1.5 rounded-[3px] transition-colors cursor-pointer ${
+            className={`text-[12px] font-bold capitalize py-1.5 rounded-lg transition-colors cursor-pointer ${
               frequency === f
-                ? 'bg-white text-[#1C1C1C] shadow-sm'
+                ? 'bg-white text-[#0F1F17] shadow-sm'
                 : dark
                 ? 'text-white/70 hover:text-white'
-                : 'text-[#555555] hover:text-[#1C1C1C]'
+                : 'text-[#5B675F] hover:text-[#0F1F17]'
             }`}
           >
             {f}
@@ -353,7 +353,7 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
         ))}
       </div>
 
-      <label className={`mt-3 flex items-start gap-2 text-[12.5px] cursor-pointer ${dark ? 'text-white/75' : 'text-[#4A4A4A]'}`}>
+      <label className={`mt-3 flex items-start gap-2 text-[12.5px] cursor-pointer ${dark ? 'text-white/75' : 'text-[#3F4A43]'}`}>
         <input
           type="checkbox"
           checked={newsletter}
@@ -367,11 +367,11 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
 
       <button
         type="submit"
-        className="mt-4 w-full bg-[#9BC53D] hover:bg-[#84AC2D] text-[#111111] font-bold text-[13px] uppercase tracking-[0.06em] py-2.5 rounded-[3px] transition-colors cursor-pointer"
+        className="mt-4 w-full bg-[#9BC53D] hover:bg-[#84AC2D] text-[#0F1F17] font-bold text-[13px] uppercase tracking-[0.06em] py-2.5 rounded-lg transition-colors cursor-pointer"
       >
         Subscribe to alerts
       </button>
-      <p className={`mt-2 text-[11px] ${dark ? 'text-white/45' : 'text-[#8A8A8A]'}`}>
+      <p className={`mt-2 text-[11px] ${dark ? 'text-white/45' : 'text-[#8A948D]'}`}>
         POPIA compliant. Unsubscribe any time.
       </p>
     </form>
@@ -383,7 +383,7 @@ export const SubscribeAlertsCard: React.FC<{ tone?: 'light' | 'dark'; defaultTop
 export const FaqAccordion: React.FC<{ items: FaqItem[] }> = ({ items }) => {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <div className="divide-y divide-[#E5E5E5] border border-[#E5E5E5] rounded-[6px] bg-white">
+    <div className="divide-y divide-[#E3E1D6] border border-[#E3E1D6] rounded-xl bg-white">
       {items.map((faq, i) => {
         const isOpen = open === i;
         return (
@@ -393,16 +393,16 @@ export const FaqAccordion: React.FC<{ items: FaqItem[] }> = ({ items }) => {
                 type="button"
                 onClick={() => setOpen(isOpen ? null : i)}
                 aria-expanded={isOpen}
-                className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 text-[15px] font-bold text-[#1C1C1C] hover:text-[#5E7F1A] cursor-pointer"
+                className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 text-[15px] font-bold text-[#0F1F17] hover:text-[#4F7A0F] cursor-pointer"
               >
                 {faq.question}
                 <ChevronDown
-                  className={`w-4 h-4 shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#6F9321]' : 'text-[#8A8A8A]'}`}
+                  className={`w-4 h-4 shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#4F7A0F]' : 'text-[#8A948D]'}`}
                 />
               </button>
             </h3>
             {isOpen && (
-              <p className="px-5 pb-5 -mt-1 text-[14px] leading-[1.7] text-[#4A4A4A]">{faq.answer}</p>
+              <p className="px-5 pb-5 -mt-1 text-[14px] leading-[1.7] text-[#3F4A43]">{faq.answer}</p>
             )}
           </div>
         );

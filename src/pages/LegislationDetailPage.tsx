@@ -142,9 +142,9 @@ const DetailView: React.FC<{
   };
 
   return (
-    <article className="bg-[#F6F7F5]" itemScope itemType="https://schema.org/Legislation">
+    <article className="bg-[#F7F6F1]" itemScope itemType="https://schema.org/Legislation">
       {/* ================= HEADER ================= */}
-      <header className="bg-[#141414] text-white">
+      <header className="bg-[#0F1F17] text-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-10 sm:pb-12">
           <nav aria-label="Breadcrumb" className="text-[12.5px] text-white/55 mb-6 overflow-hidden">
             <ol className="flex items-center gap-1.5 min-w-0">
@@ -195,7 +195,7 @@ const DetailView: React.FC<{
             </dl>
 
             {item.commentDeadline && item.status === 'open-for-comment' && (
-              <div className="mt-6 inline-flex flex-wrap items-center gap-3 bg-[#FFF2DC] rounded-[6px] px-4 py-3">
+              <div className="mt-6 inline-flex flex-wrap items-center gap-3 bg-[#FFF2DC] rounded-xl px-4 py-3">
                 <CommentDeadline iso={item.commentDeadline} />
               </div>
             )}
@@ -215,12 +215,12 @@ const DetailView: React.FC<{
         <div className="grid lg:grid-cols-[1fr_360px] gap-8 lg:gap-10 items-start">
           <div className="min-w-0 space-y-8">
             {/* Key points */}
-            <section className="bg-white border border-[#E4E4E4] border-l-4 border-l-[#9BC53D] rounded-[8px] p-6 sm:p-7">
-              <h2 className="text-[13px] font-bold uppercase tracking-[0.1em] text-[#5E7F1A] mb-4">Key points at a glance</h2>
+            <section className="bg-white border border-[#E3E1D6] border-l-4 border-l-[#9BC53D] rounded-xl p-6 sm:p-7">
+              <h2 className="text-[13px] font-bold uppercase tracking-[0.1em] text-[#4F7A0F] mb-4">Key points at a glance</h2>
               <ul className="space-y-3">
                 {item.keyPoints.map((p) => (
-                  <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.6] text-[#1C1C1C]">
-                    <CheckCircle2 className="w-5 h-5 text-[#6F9321] shrink-0 mt-0.5" />
+                  <li key={p} className="flex items-start gap-3 text-[15px] leading-[1.6] text-[#0F1F17]">
+                    <CheckCircle2 className="w-5 h-5 text-[#4F7A0F] shrink-0 mt-0.5" />
                     {p}
                   </li>
                 ))}
@@ -228,20 +228,20 @@ const DetailView: React.FC<{
             </section>
 
             {/* Summary */}
-            <section className="bg-white border border-[#E4E4E4] rounded-[8px] p-6 sm:p-8">
-              <h2 className="text-[22px] font-bold text-[#1C1C1C] mb-4">What this means for your business</h2>
-              <div itemProp="description" className="space-y-4 text-[16px] leading-[1.75] text-[#333333] max-w-[72ch]">
+            <section className="bg-white border border-[#E3E1D6] rounded-xl p-6 sm:p-8">
+              <h2 className="text-[22px] font-bold text-[#0F1F17] mb-4">What this means for your business</h2>
+              <div itemProp="description" className="space-y-4 text-[16px] leading-[1.75] text-[#18221C] max-w-[72ch]">
                 {item.fullBrief.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
               </div>
 
-              <h3 className="mt-8 text-[16px] font-bold text-[#1C1C1C] mb-3 inline-flex items-center gap-2">
-                <Users className="w-4 h-4 text-[#6F9321]" /> Who is affected
+              <h3 className="mt-8 text-[16px] font-bold text-[#0F1F17] mb-3 inline-flex items-center gap-2">
+                <Users className="w-4 h-4 text-[#4F7A0F]" /> Who is affected
               </h3>
               <div className="flex flex-wrap gap-2">
                 {item.whoIsAffected.map((w) => (
-                  <span key={w} className="text-[13px] font-semibold text-[#1C1C1C] bg-[#F2F7E6] border border-[#DCEBB8] rounded-full px-3 py-1">
+                  <span key={w} className="text-[13px] font-semibold text-[#0F1F17] bg-[#F2F7E6] border border-[#DCEBB8] rounded-full px-3 py-1">
                     {w}
                   </span>
                 ))}
@@ -250,9 +250,9 @@ const DetailView: React.FC<{
 
             {/* Documents */}
             {item.documents.length > 0 && (
-              <section className="bg-white border border-[#E4E4E4] rounded-[8px] p-6 sm:p-7">
-                <h2 className="text-[20px] font-bold text-[#1C1C1C] mb-1">Documents</h2>
-                <p className="text-[13.5px] text-[#6B6B6B] mb-5">
+              <section className="bg-white border border-[#E3E1D6] rounded-xl p-6 sm:p-7">
+                <h2 className="text-[20px] font-bold text-[#0F1F17] mb-1">Documents</h2>
+                <p className="text-[13.5px] text-[#5B675F] mb-5">
                   Previews load only when you open them, so the page stays fast.
                 </p>
                 <div className="space-y-3">
@@ -264,8 +264,8 @@ const DetailView: React.FC<{
             )}
 
             {/* References */}
-            <section className="bg-white border border-[#E4E4E4] rounded-[8px] p-6 sm:p-7">
-              <h2 className="text-[20px] font-bold text-[#1C1C1C] mb-4">Official sources & references</h2>
+            <section className="bg-white border border-[#E3E1D6] rounded-xl p-6 sm:p-7">
+              <h2 className="text-[20px] font-bold text-[#0F1F17] mb-4">Official sources & references</h2>
               <ul className="grid sm:grid-cols-2 gap-3">
                 {item.references.map((r) => (
                   <li key={r.url}>
@@ -273,13 +273,13 @@ const DetailView: React.FC<{
                       href={r.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group h-full flex items-start justify-between gap-3 border border-[#E4E4E4] rounded-[6px] p-4 hover:border-[#9BC53D] transition-colors"
+                      className="group h-full flex items-start justify-between gap-3 border border-[#E3E1D6] rounded-xl p-4 hover:border-[#9BC53D] transition-colors"
                     >
                       <span>
-                        <span className="block text-[14px] font-semibold text-[#1C1C1C] group-hover:text-[#5E7F1A]">{r.label}</span>
-                        <span className="block text-[12px] text-[#8A8A8A] mt-0.5">{r.source}</span>
+                        <span className="block text-[14px] font-semibold text-[#0F1F17] group-hover:text-[#4F7A0F]">{r.label}</span>
+                        <span className="block text-[12px] text-[#8A948D] mt-0.5">{r.source}</span>
                       </span>
-                      <ExternalLink className="w-4 h-4 text-[#8A8A8A] shrink-0" />
+                      <ExternalLink className="w-4 h-4 text-[#8A948D] shrink-0" />
                     </a>
                   </li>
                 ))}
@@ -289,12 +289,12 @@ const DetailView: React.FC<{
             {/* FAQ */}
             {item.faqs.length > 0 && (
               <section>
-                <h2 className="text-[20px] font-bold text-[#1C1C1C] mb-4">Frequently asked questions</h2>
+                <h2 className="text-[20px] font-bold text-[#0F1F17] mb-4">Frequently asked questions</h2>
                 <FaqAccordion items={item.faqs} />
               </section>
             )}
 
-            <p className="text-[12.5px] text-[#8A8A8A] leading-relaxed">
+            <p className="text-[12.5px] text-[#8A948D] leading-relaxed">
               This brief is for guidance only and does not constitute legal advice. Always refer to the
               official text published in the Government Gazette.
             </p>
@@ -302,9 +302,9 @@ const DetailView: React.FC<{
 
           {/* ================= SIDEBAR ================= */}
           <aside className="space-y-6 lg:sticky lg:top-6">
-            <div className="bg-white border border-[#E4E4E4] rounded-[8px] p-5">
-              <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B] mb-4">At a glance</h2>
-              <dl className="divide-y divide-[#EFEFEF] text-[13.5px]">
+            <div className="bg-white border border-[#E3E1D6] rounded-xl p-5">
+              <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#5B675F] mb-4">At a glance</h2>
+              <dl className="divide-y divide-[#E3E1D6] text-[13.5px]">
                 {[
                   ['Act / area', category?.title ?? '—'],
                   ['Act code', category?.actCode ?? '—'],
@@ -313,8 +313,8 @@ const DetailView: React.FC<{
                   ['Published', item.date],
                 ].map(([k, v]) => (
                   <div key={k} className="flex justify-between gap-4 py-2.5">
-                    <dt className="text-[#6B6B6B]">{k}</dt>
-                    <dd className="font-semibold text-[#1C1C1C] text-right">{v}</dd>
+                    <dt className="text-[#5B675F]">{k}</dt>
+                    <dd className="font-semibold text-[#0F1F17] text-right">{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -322,7 +322,7 @@ const DetailView: React.FC<{
                 <button
                   type="button"
                   onClick={() => onNavigate('legislation', category.id)}
-                  className="mt-4 w-full inline-flex items-center justify-center gap-2 border border-[#D5D5D5] hover:border-[#9BC53D] rounded-[4px] py-2.5 text-[13px] font-bold text-[#1C1C1C] cursor-pointer"
+                  className="mt-4 w-full inline-flex items-center justify-center gap-2 border border-[#CFCCBE] hover:border-[#9BC53D] rounded-lg py-2.5 text-[13px] font-bold text-[#0F1F17] cursor-pointer"
                 >
                   <Scale className="w-4 h-4" /> All {category.actCode} updates
                 </button>
@@ -332,20 +332,20 @@ const DetailView: React.FC<{
             <SubscribeAlertsCard defaultTopics={[item.topic]} />
 
             {relatedArticles.length > 0 && (
-              <div className="bg-white border border-[#E4E4E4] rounded-[8px] p-5">
-                <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B] mb-4">Related articles</h2>
+              <div className="bg-white border border-[#E3E1D6] rounded-xl p-5">
+                <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#5B675F] mb-4">Related articles</h2>
                 <ul className="space-y-4">
                   {relatedArticles.map((a) => (
                     <li key={a.id}>
                       <button type="button" onClick={() => onOpenArticle(a)} className="group w-full text-left flex gap-3 cursor-pointer">
-                        <span className="w-20 h-14 shrink-0 overflow-hidden rounded-[4px] bg-[#EFEFEF]">
+                        <span className="w-20 h-14 shrink-0 overflow-hidden rounded-lg bg-[#E3E1D6]">
                           <SafeImage src={a.image} alt={a.imageAlt} className="w-full h-full object-cover" />
                         </span>
                         <span className="min-w-0">
-                          <span className="block text-[13.5px] font-semibold text-[#1C1C1C] leading-snug line-clamp-2 group-hover:text-[#5E7F1A]">
+                          <span className="block text-[13.5px] font-semibold text-[#0F1F17] leading-snug line-clamp-2 group-hover:text-[#4F7A0F]">
                             {a.title}
                           </span>
-                          <span className="block text-[12px] text-[#8A8A8A] mt-1">{a.date}</span>
+                          <span className="block text-[12px] text-[#8A948D] mt-1">{a.date}</span>
                         </span>
                       </button>
                     </li>
@@ -355,19 +355,19 @@ const DetailView: React.FC<{
             )}
 
             {links.length > 0 && (
-              <div className="bg-white border border-[#E4E4E4] rounded-[8px] p-5">
+              <div className="bg-white border border-[#E3E1D6] rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B]">Helpful links</h2>
-                  <button type="button" onClick={() => onNavigate('helpful-links')} className="text-[12px] font-bold text-[#5E7F1A] hover:text-black cursor-pointer">
+                  <h2 className="text-[13px] font-bold uppercase tracking-[0.08em] text-[#5B675F]">Helpful links</h2>
+                  <button type="button" onClick={() => onNavigate('helpful-links')} className="text-[12px] font-bold text-[#4F7A0F] hover:text-black cursor-pointer">
                     View all
                   </button>
                 </div>
-                <ul className="divide-y divide-[#EFEFEF]">
+                <ul className="divide-y divide-[#E3E1D6]">
                   {links.map((l) => (
                     <li key={l.id}>
                       <a href={l.url} target="_blank" rel="noopener noreferrer" className="group flex items-start justify-between gap-3 py-2.5">
-                        <span className="text-[13.5px] font-semibold text-[#1C1C1C] group-hover:text-[#5E7F1A]">{l.organisation}</span>
-                        <ExternalLink className="w-3.5 h-3.5 text-[#8A8A8A] shrink-0 mt-1" />
+                        <span className="text-[13.5px] font-semibold text-[#0F1F17] group-hover:text-[#4F7A0F]">{l.organisation}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-[#8A948D] shrink-0 mt-1" />
                       </a>
                     </li>
                   ))}
@@ -380,8 +380,8 @@ const DetailView: React.FC<{
         {/* ================= RELATED LEGISLATION ================= */}
         {related.length > 0 && (
           <section className="mt-14" aria-labelledby="related-heading">
-            <span className="block text-[11.5px] font-bold uppercase tracking-[0.14em] text-[#6F9321] mb-1.5">Keep reading</span>
-            <h2 id="related-heading" className="text-[22px] sm:text-[26px] font-bold text-[#1C1C1C] mb-6">Related legislation</h2>
+            <span className="block text-[11.5px] font-bold uppercase tracking-[0.14em] text-[#4F7A0F] mb-1.5">Keep reading</span>
+            <h2 id="related-heading" className="text-[22px] sm:text-[26px] font-bold text-[#0F1F17] mb-6">Related legislation</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
               {related.map((u) => (
                 <LegislationCard
@@ -417,14 +417,14 @@ const DocumentRow: React.FC<{ item: LegislationUpdate; doc: LegislationDocument 
   const canEmbed = Boolean(doc.url) && doc.format === 'PDF';
 
   return (
-    <div className="border border-[#E4E4E4] rounded-[6px] overflow-hidden">
+    <div className="border border-[#E3E1D6] rounded-xl overflow-hidden">
       <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 p-4">
-        <span className="w-10 h-12 shrink-0 rounded-[3px] bg-[#FBEAEA] text-[#B3261E] text-[10px] font-extrabold flex items-center justify-center">
+        <span className="w-10 h-12 shrink-0 rounded-lg bg-[#FBEAEA] text-[#B3261E] text-[10px] font-extrabold flex items-center justify-center">
           {doc.format}
         </span>
         <div className="flex-1 min-w-0">
-          <div className="text-[14px] font-semibold text-[#1C1C1C] leading-snug">{doc.title}</div>
-          <div className="text-[12px] text-[#8A8A8A] mt-0.5">
+          <div className="text-[14px] font-semibold text-[#0F1F17] leading-snug">{doc.title}</div>
+          <div className="text-[12px] text-[#8A948D] mt-0.5">
             {doc.format} · {formatFileSize(doc.sizeKb)}
             {doc.pages ? ` · ${doc.pages} pages` : ''}
           </div>
@@ -437,14 +437,14 @@ const DocumentRow: React.FC<{ item: LegislationUpdate; doc: LegislationDocument 
               setLoading(true);
             }}
             aria-expanded={open}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 border border-[#D5D5D5] hover:border-[#9BC53D] rounded-[4px] px-3 py-2 text-[12.5px] font-bold cursor-pointer"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 border border-[#CFCCBE] hover:border-[#9BC53D] rounded-lg px-3 py-2 text-[12.5px] font-bold cursor-pointer"
           >
             <Eye className="w-3.5 h-3.5" /> {open ? 'Hide' : 'Preview'}
           </button>
           <button
             type="button"
             onClick={() => downloadDocument(item, doc)}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-[#1C1C1C] hover:bg-black text-white rounded-[4px] px-3 py-2 text-[12.5px] font-bold cursor-pointer"
+            className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-[#0F1F17] hover:bg-black text-white rounded-lg px-3 py-2 text-[12.5px] font-bold cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" /> Download
           </button>
@@ -452,11 +452,11 @@ const DocumentRow: React.FC<{ item: LegislationUpdate; doc: LegislationDocument 
       </div>
 
       {open && (
-        <div className="border-t border-[#E4E4E4] bg-[#FAFAFA]">
+        <div className="border-t border-[#E3E1D6] bg-[#F7F6F1]">
           {canEmbed ? (
             <div className="relative h-[520px]">
               {loading && (
-                <div className="absolute inset-0 flex items-center justify-center gap-2 text-[13px] text-[#6B6B6B]">
+                <div className="absolute inset-0 flex items-center justify-center gap-2 text-[13px] text-[#5B675F]">
                   <Loader2 className="w-4 h-4 animate-spin" /> Loading document…
                 </div>
               )}
@@ -469,7 +469,7 @@ const DocumentRow: React.FC<{ item: LegislationUpdate; doc: LegislationDocument 
               />
             </div>
           ) : (
-            <pre className="max-h-[420px] overflow-auto p-5 text-[12.5px] leading-[1.6] text-[#333333] whitespace-pre-wrap font-sans">
+            <pre className="max-h-[420px] overflow-auto p-5 text-[12.5px] leading-[1.6] text-[#18221C] whitespace-pre-wrap font-sans">
               {buildBriefText(item)}
             </pre>
           )}
@@ -501,7 +501,7 @@ const ActionButton: React.FC<{ icon: React.ElementType; onClick: () => void; chi
   <button
     type="button"
     onClick={onClick}
-    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[3px] text-[13px] font-bold border border-white/40 text-white hover:border-[#9BC53D] hover:text-[#9BC53D] transition-colors cursor-pointer"
+    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-bold border border-white/40 text-white hover:border-[#9BC53D] hover:text-[#9BC53D] transition-colors cursor-pointer"
   >
     <Icon className="w-4 h-4" />
     {children}
@@ -512,26 +512,26 @@ const PrevNext: React.FC<{ dir: 'prev' | 'next'; item: LegislationUpdate; onClic
   <button
     type="button"
     onClick={onClick}
-    className={`group bg-white border border-[#E4E4E4] hover:border-[#9BC53D] rounded-[8px] p-5 transition-colors cursor-pointer ${
+    className={`group bg-white border border-[#E3E1D6] hover:border-[#9BC53D] rounded-xl p-5 transition-colors cursor-pointer ${
       dir === 'next' ? 'text-right' : 'text-left'
     }`}
   >
-    <span className={`flex items-center gap-1.5 text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#6B6B6B] mb-1.5 ${dir === 'next' ? 'justify-end' : ''}`}>
+    <span className={`flex items-center gap-1.5 text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#5B675F] mb-1.5 ${dir === 'next' ? 'justify-end' : ''}`}>
       {dir === 'prev' ? <><ArrowLeft className="w-3.5 h-3.5" /> Older</> : <>Newer <ArrowRight className="w-3.5 h-3.5" /></>}
     </span>
-    <span className="block text-[14.5px] font-bold text-[#1C1C1C] leading-snug group-hover:text-[#5E7F1A] line-clamp-2">{item.title}</span>
+    <span className="block text-[14.5px] font-bold text-[#0F1F17] leading-snug group-hover:text-[#4F7A0F] line-clamp-2">{item.title}</span>
   </button>
 );
 
 const NotFound: React.FC<{ onNavigate: (page: PageId, filter?: string) => void }> = ({ onNavigate }) => (
   <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
-    <Link2 className="w-10 h-10 text-[#BDBDBD] mx-auto mb-4" />
-    <h1 className="text-[26px] font-bold text-[#1C1C1C]">Legislation not found</h1>
-    <p className="text-[15px] text-[#6B6B6B] mt-2">This update may have moved or been archived.</p>
+    <Link2 className="w-10 h-10 text-[#CFCCBE] mx-auto mb-4" />
+    <h1 className="text-[26px] font-bold text-[#0F1F17]">Legislation not found</h1>
+    <p className="text-[15px] text-[#5B675F] mt-2">This update may have moved or been archived.</p>
     <button
       type="button"
       onClick={() => onNavigate('legislation')}
-      className="mt-6 bg-[#9BC53D] hover:bg-[#84AC2D] text-[#111111] font-bold text-[13px] uppercase tracking-[0.06em] px-5 py-3 rounded-[4px] cursor-pointer"
+      className="mt-6 bg-[#9BC53D] hover:bg-[#84AC2D] text-[#0F1F17] font-semibold text-[14px] px-5 py-3 rounded-full cursor-pointer"
     >
       Browse all legislation
     </button>

@@ -36,36 +36,36 @@ export const ContactPage: React.FC<{ onSponsorClick: (t: string, c: string) => v
 
   return (
     <InnerPageLayout pageTitle="CONTACT US" onSponsorClick={onSponsorClick}>
-      <div className="space-y-6 text-[15px] text-[#333333] leading-[1.65]">
+      <div className="space-y-6 text-[15px] text-[#18221C] leading-[1.65]">
         <p>
           Get in touch with <strong>Food Risk Forum Pty Ltd</strong> regarding editorial
           submissions, regulatory topic requests, webinar partnerships, or Supplier Directory
           listings.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#FAFAFA] border border-[#E2E2E2] p-5 rounded-[2px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[#F7F6F1] border border-[#E3E1D6] p-5 rounded-lg">
           <div>
-            <div className="text-[12px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+            <div className="text-[12px] font-bold uppercase tracking-wider text-[#8A948D]">
               Editorial &amp; Compliance Desk
             </div>
-            <div className="font-bold text-[#1C1C1C] mt-1">info@foodfocus.co.za</div>
+            <div className="font-bold text-[#0F1F17] mt-1">info@foodfocus.co.za</div>
           </div>
           <div>
-            <div className="text-[12px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+            <div className="text-[12px] font-bold uppercase tracking-wider text-[#8A948D]">
               Publisher
             </div>
-            <div className="font-bold text-[#1C1C1C] mt-1">
+            <div className="font-bold text-[#0F1F17] mt-1">
               Food Risk Forum Pty Ltd · Johannesburg, South Africa
             </div>
           </div>
         </div>
 
         {sent ? (
-          <div className="border border-[#9BC53D] bg-[#F9FCF2] p-5 rounded-[2px] flex items-start gap-3">
+          <div className="border border-[#9BC53D] bg-[#F9FCF2] p-5 rounded-lg flex items-start gap-3">
             <CheckCircle2 className="w-5 h-5 text-[#84AC2D] shrink-0 mt-0.5" />
             <div>
-              <div className="font-bold text-[#1C1C1C]">Message sent to Food Focus</div>
-              <p className="text-[13.5px] text-[#444444] mt-1">
+              <div className="font-bold text-[#0F1F17]">Message sent to Food Focus</div>
+              <p className="text-[13.5px] text-[#3F4A43] mt-1">
                 Thank you, {name}. Our team will respond to {email} regarding &ldquo;{subject}
                 &rdquo;.
               </p>
@@ -75,17 +75,17 @@ export const ContactPage: React.FC<{ onSponsorClick: (t: string, c: string) => v
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] font-bold text-[#1C1C1C] mb-1">Full Name</label>
+                <label className="block text-[13px] font-bold text-[#0F1F17] mb-1">Full Name</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full border border-[#CCCCCC] px-3.5 py-2.5 text-[14px] rounded-[2px] focus:outline-2 focus:outline-[#9BC53D]"
+                  className="w-full border border-[#CFCCBE] px-3.5 py-2.5 text-[14px] rounded-lg focus:outline-2 focus:outline-[#9BC53D]"
                 />
               </div>
               <div>
-                <label className="block text-[13px] font-bold text-[#1C1C1C] mb-1">
+                <label className="block text-[13px] font-bold text-[#0F1F17] mb-1">
                   Email Address
                 </label>
                 <input
@@ -93,16 +93,16 @@ export const ContactPage: React.FC<{ onSponsorClick: (t: string, c: string) => v
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-[#CCCCCC] px-3.5 py-2.5 text-[14px] rounded-[2px] focus:outline-2 focus:outline-[#9BC53D]"
+                  className="w-full border border-[#CFCCBE] px-3.5 py-2.5 text-[14px] rounded-lg focus:outline-2 focus:outline-[#9BC53D]"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-[13px] font-bold text-[#1C1C1C] mb-1">Enquiry Type</label>
+              <label className="block text-[13px] font-bold text-[#0F1F17] mb-1">Enquiry Type</label>
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full border border-[#CCCCCC] px-3.5 py-2.5 text-[14px] rounded-[2px] bg-white focus:outline-2 focus:outline-[#9BC53D]"
+                className="w-full border border-[#CFCCBE] px-3.5 py-2.5 text-[14px] rounded-lg bg-white focus:outline-2 focus:outline-[#9BC53D]"
               >
                 <option>Editorial / Regulatory Query</option>
                 <option>Advertising &amp; Sponsored Webinars</option>
@@ -111,18 +111,18 @@ export const ContactPage: React.FC<{ onSponsorClick: (t: string, c: string) => v
               </select>
             </div>
             <div>
-              <label className="block text-[13px] font-bold text-[#1C1C1C] mb-1">Message</label>
+              <label className="block text-[13px] font-bold text-[#0F1F17] mb-1">Message</label>
               <textarea
                 rows={4}
                 required
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full border border-[#CCCCCC] px-3.5 py-2.5 text-[14px] rounded-[2px] focus:outline-2 focus:outline-[#9BC53D]"
+                className="w-full border border-[#CFCCBE] px-3.5 py-2.5 text-[14px] rounded-lg focus:outline-2 focus:outline-[#9BC53D]"
               />
             </div>
             <button
               type="submit"
-              className="bg-[#9BC53D] hover:bg-[#84AC2D] text-[#111111] font-extrabold text-[13px] uppercase tracking-wider px-6 py-2.5 rounded-[2px] cursor-pointer"
+              className="bg-[#9BC53D] hover:bg-[#84AC2D] text-[#0F1F17] font-extrabold text-[13px] uppercase tracking-wider px-6 py-2.5 rounded-lg cursor-pointer"
             >
               Send Message
             </button>
@@ -166,12 +166,12 @@ export const ArticlesArchivePage: React.FC<
         {items.map((item) => (
           <article
             key={item.id}
-            className="border border-[#E5E5E5] bg-white rounded-[2px] shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col"
+            className="border border-[#E3E1D6] bg-white rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col"
           >
             <button
               type="button"
               onClick={() => onOpenArticle(item)}
-              className="aspect-[16/10] w-full overflow-hidden bg-[#F2F2F2] cursor-pointer"
+              className="aspect-[16/10] w-full overflow-hidden bg-[#F7F6F1] cursor-pointer"
             >
               <SafeImage
                 src={item.image}
@@ -180,28 +180,28 @@ export const ArticlesArchivePage: React.FC<
               />
             </button>
             <div className="p-4 flex flex-col flex-1">
-              <div className="text-[11.5px] text-[#8A8A8A] mb-1.5">
-                <span className="font-bold uppercase tracking-wider text-[#6F9321]">
+              <div className="text-[11.5px] text-[#8A948D] mb-1.5">
+                <span className="font-bold uppercase tracking-wider text-[#4F7A0F]">
                   {item.category}
                 </span>{' '}
                 · {item.date}
               </div>
-              <h3 className="text-[15.5px] font-bold text-[#1C1C1C] leading-snug mb-2">
+              <h3 className="text-[15.5px] font-bold text-[#0F1F17] leading-snug mb-2">
                 <button
                   type="button"
                   onClick={() => onOpenArticle(item)}
-                  className="text-left underline decoration-[#1C1C1C]/40 underline-offset-3 hover:text-[#84AC2D] cursor-pointer"
+                  className="text-left underline decoration-[#0F1F17]/40 underline-offset-3 hover:text-[#84AC2D] cursor-pointer"
                 >
                   {item.title}
                 </button>
               </h3>
-              <p className="text-[13.5px] text-[#333333] leading-relaxed line-clamp-3 mb-3 flex-1">
+              <p className="text-[13.5px] text-[#18221C] leading-relaxed line-clamp-3 mb-3 flex-1">
                 {item.excerpt}
               </p>
               <button
                 type="button"
                 onClick={() => onOpenArticle(item)}
-                className="text-left text-[13px] font-bold text-[#1C1C1C] hover:text-[#9BC53D] cursor-pointer"
+                className="text-left text-[13px] font-bold text-[#0F1F17] hover:text-[#9BC53D] cursor-pointer"
               >
                 Read More »
               </button>
@@ -241,10 +241,10 @@ export const DirectoryPage: React.FC<{
               key={c}
               type="button"
               onClick={() => setCat(c)}
-              className={`px-3.5 py-1.5 text-[12.5px] font-bold rounded-[2px] border transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 text-[12.5px] font-bold rounded-lg border transition-colors cursor-pointer ${
                 cat === c
-                  ? 'bg-[#1C1C1C] text-[#9BC53D] border-[#1C1C1C]'
-                  : 'bg-[#FAFAFA] text-[#333333] border-[#DCDCDC] hover:border-[#9BC53D]'
+                  ? 'bg-[#0F1F17] text-[#9BC53D] border-[#0F1F17]'
+                  : 'bg-[#F7F6F1] text-[#18221C] border-[#E3E1D6] hover:border-[#9BC53D]'
               }`}
             >
               {c === 'all' ? 'All Suppliers' : c}
@@ -256,12 +256,12 @@ export const DirectoryPage: React.FC<{
           {list.map((supplier) => (
             <div
               key={supplier.id}
-              className="border border-[#E5E5E5] bg-white p-5 rounded-[2px] shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between"
+              className="border border-[#E3E1D6] bg-white p-5 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between gap-3 mb-3">
                   <span
-                    className="text-[16px] font-extrabold tracking-tight px-2.5 py-1 rounded-[2px]"
+                    className="text-[16px] font-extrabold tracking-tight px-2.5 py-1 rounded-lg"
                     style={{
                       color: supplier.accentColor,
                       backgroundColor: `${supplier.accentColor}14`,
@@ -269,22 +269,22 @@ export const DirectoryPage: React.FC<{
                   >
                     {supplier.shortMark}
                   </span>
-                  <span className="text-[11.5px] font-medium text-[#8A8A8A]">
+                  <span className="text-[11.5px] font-medium text-[#8A948D]">
                     {supplier.location}
                   </span>
                 </div>
-                <h3 className="text-[16px] font-bold text-[#1C1C1C]">{supplier.name}</h3>
-                <div className="text-[12px] font-semibold text-[#6F9321] mt-0.5 mb-2">
+                <h3 className="text-[16px] font-bold text-[#0F1F17]">{supplier.name}</h3>
+                <div className="text-[12px] font-semibold text-[#4F7A0F] mt-0.5 mb-2">
                   {supplier.category} · {supplier.accreditation}
                 </div>
-                <p className="text-[13.5px] text-[#444444] leading-relaxed mb-4">
+                <p className="text-[13.5px] text-[#3F4A43] leading-relaxed mb-4">
                   {supplier.description}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => onOpenSupplier(supplier)}
-                className="self-start text-[13px] font-bold text-[#1C1C1C] hover:text-[#9BC53D] cursor-pointer"
+                className="self-start text-[13px] font-bold text-[#0F1F17] hover:text-[#9BC53D] cursor-pointer"
               >
                 View Supplier Profile »
               </button>
@@ -311,13 +311,13 @@ export const EventsAndTrainingPage: React.FC<{
           {INDUSTRY_EVENTS.map((evt) => (
             <div
               key={evt.id}
-              className="border border-[#E5E5E5] bg-white p-5 rounded-[2px] shadow-[0_2px_6px_rgba(0,0,0,0.04)]"
+              className="border border-[#E3E1D6] bg-white p-5 rounded-lg shadow-[0_2px_6px_rgba(0,0,0,0.04)]"
             >
-              <div className="text-[12px] font-bold uppercase tracking-wider text-[#6F9321] mb-1">
+              <div className="text-[12px] font-bold uppercase tracking-wider text-[#4F7A0F] mb-1">
                 {evt.format}
               </div>
-              <h3 className="text-[17px] font-bold text-[#1C1C1C] mb-2">{evt.title}</h3>
-              <div className="flex flex-wrap gap-4 text-[13px] text-[#5B6067] mb-2.5">
+              <h3 className="text-[17px] font-bold text-[#0F1F17] mb-2">{evt.title}</h3>
+              <div className="flex flex-wrap gap-4 text-[13px] text-[#183025] mb-2.5">
                 <span className="inline-flex items-center gap-1.5">
                   <Calendar className="w-4 h-4 text-[#9BC53D]" />
                   {evt.date}
@@ -327,15 +327,15 @@ export const EventsAndTrainingPage: React.FC<{
                   {evt.location}
                 </span>
               </div>
-              <p className="text-[14px] text-[#333333] leading-relaxed">{evt.summary}</p>
+              <p className="text-[14px] text-[#18221C] leading-relaxed">{evt.summary}</p>
             </div>
           ))}
         </div>
       ) : (
         <div className="space-y-5">
           {subFilter && (
-            <p className="text-[14px] font-semibold text-[#5B6067]">
-              Selected Track: <span className="text-[#1C1C1C]">{subFilter}</span>
+            <p className="text-[14px] font-semibold text-[#183025]">
+              Selected Track: <span className="text-[#0F1F17]">{subFilter}</span>
             </p>
           )}
           {[
@@ -357,19 +357,19 @@ export const EventsAndTrainingPage: React.FC<{
           ].map((course) => (
             <div
               key={course.title}
-              className="border border-[#E5E5E5] bg-white p-5 rounded-[2px] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="border border-[#E3E1D6] bg-white p-5 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4"
             >
               <div>
-                <div className="text-[12px] font-bold uppercase tracking-wider text-[#6F9321]">
+                <div className="text-[12px] font-bold uppercase tracking-wider text-[#4F7A0F]">
                   {course.provider}
                 </div>
-                <h3 className="text-[16px] font-bold text-[#1C1C1C] mt-0.5">{course.title}</h3>
-                <p className="text-[13.5px] text-[#444444] mt-1">{course.detail}</p>
+                <h3 className="text-[16px] font-bold text-[#0F1F17] mt-0.5">{course.title}</h3>
+                <p className="text-[13.5px] text-[#3F4A43] mt-1">{course.detail}</p>
               </div>
               <button
                 type="button"
                 onClick={() => onSponsorClick(course.title, course.detail)}
-                className="bg-[#9BC53D] hover:bg-[#84AC2D] text-[#111111] font-bold text-[12px] uppercase tracking-wider px-4 py-2.5 rounded-[2px] whitespace-nowrap cursor-pointer shrink-0"
+                className="bg-[#9BC53D] hover:bg-[#84AC2D] text-[#0F1F17] font-semibold text-[12px] px-4 py-2.5 rounded-full whitespace-nowrap cursor-pointer shrink-0"
               >
                 Enquire
               </button>

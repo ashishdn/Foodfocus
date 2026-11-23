@@ -36,8 +36,8 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
   })).filter((g) => g.links.length > 0);
 
   return (
-    <div className="bg-[#F6F7F5]">
-      <section className="bg-[#141414] text-white">
+    <div className="bg-[#F7F6F1]">
+      <section className="bg-[#0F1F17] text-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-12 sm:pb-14">
           <nav aria-label="Breadcrumb" className="text-[12.5px] text-white/55 mb-5">
             <ol className="flex items-center gap-1.5">
@@ -58,14 +58,14 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
               compliance — organised by food safety, food quality, public health and regulatory area.
             </p>
             <div className="mt-6 relative">
-              <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#8A8A8A]" />
+              <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-[#8A948D]" />
               <input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search organisations and resources"
                 aria-label="Search helpful links"
-                className="w-full bg-white text-[#1C1C1C] text-[15px] pl-12 pr-4 py-3.5 rounded-[6px] focus:outline-none focus:ring-4 focus:ring-[#9BC53D]/50"
+                className="w-full bg-white text-[#0F1F17] text-[15px] pl-12 pr-4 py-3.5 rounded-xl focus:outline-none focus:ring-4 focus:ring-[#9BC53D]/50"
               />
             </div>
           </div>
@@ -82,7 +82,7 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
               aria-selected={topic === t}
               onClick={() => setTopic(t)}
               className={`px-4 py-2 rounded-full text-[13.5px] font-bold border transition-colors cursor-pointer ${
-                topic === t ? 'bg-[#1C1C1C] border-[#1C1C1C] text-white' : 'bg-white border-[#D5D5D5] text-[#1C1C1C] hover:border-[#9BC53D]'
+                topic === t ? 'bg-[#0F1F17] border-[#0F1F17] text-white' : 'bg-white border-[#CFCCBE] text-[#0F1F17] hover:border-[#9BC53D]'
               }`}
             >
               {t === 'all' ? 'All areas' : t}
@@ -91,7 +91,7 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
         </div>
 
         {grouped.length === 0 && (
-          <p className="text-[15px] text-[#6B6B6B] py-10 text-center">No resources match your search.</p>
+          <p className="text-[15px] text-[#5B675F] py-10 text-center">No resources match your search.</p>
         )}
 
         <div className="space-y-12">
@@ -99,13 +99,13 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
             <section key={g.id} aria-labelledby={`topic-${g.id}`}>
               <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
                 <div>
-                  <h2 id={`topic-${g.id}`} className="text-[22px] font-bold text-[#1C1C1C]">{g.id}</h2>
-                  <p className="text-[14px] text-[#6B6B6B] mt-1">{g.description}</p>
+                  <h2 id={`topic-${g.id}`} className="text-[22px] font-bold text-[#0F1F17]">{g.id}</h2>
+                  <p className="text-[14px] text-[#5B675F] mt-1">{g.description}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => onNavigate('legislation')}
-                  className="text-[13px] font-bold text-[#5E7F1A] hover:text-black inline-flex items-center gap-1 cursor-pointer"
+                  className="text-[13px] font-bold text-[#4F7A0F] hover:text-black inline-flex items-center gap-1 cursor-pointer"
                 >
                   {LEGISLATION_UPDATES.filter((u) => u.topic === g.id).length} related legislation updates
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -113,11 +113,11 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {g.links.map((l) => (
-                  <div key={l.id} className="bg-white border border-[#E4E4E4] rounded-[8px] p-5 flex flex-col hover:border-[#9BC53D] transition-colors">
-                    <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#6F9321]">{l.organisation}</span>
-                    <h3 className="text-[16px] font-bold text-[#1C1C1C] mt-1">{l.title}</h3>
-                    <p className="text-[13.5px] text-[#555555] leading-[1.6] mt-1.5 mb-4">{l.description}</p>
-                    <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#EFEFEF]">
+                  <div key={l.id} className="bg-white border border-[#E3E1D6] rounded-xl p-5 flex flex-col hover:border-[#9BC53D] transition-colors">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#4F7A0F]">{l.organisation}</span>
+                    <h3 className="text-[16px] font-bold text-[#0F1F17] mt-1">{l.title}</h3>
+                    <p className="text-[13.5px] text-[#5B675F] leading-[1.6] mt-1.5 mb-4">{l.description}</p>
+                    <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#E3E1D6]">
                       <div className="flex flex-wrap gap-1.5">
                         {l.relatedCategoryIds.slice(0, 2).map((cid) => {
                           const c = LEGISLATION_CATEGORIES.find((x) => x.id === cid);
@@ -126,7 +126,7 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
                               key={cid}
                               type="button"
                               onClick={() => onNavigate('legislation', cid)}
-                              className="text-[11.5px] font-semibold text-[#4A4A4A] bg-[#F4F4F4] hover:bg-[#EAF5D3] rounded-full px-2 py-0.5 cursor-pointer"
+                              className="text-[11.5px] font-semibold text-[#3F4A43] bg-[#F7F6F1] hover:bg-[#EAF5D3] rounded-full px-2 py-0.5 cursor-pointer"
                             >
                               {c.actCode}
                             </button>
@@ -137,7 +137,7 @@ export const HelpfulLinksPage: React.FC<HelpfulLinksPageProps> = ({ onNavigate }
                         href={l.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#1C1C1C] hover:text-[#5E7F1A]"
+                        className="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#0F1F17] hover:text-[#4F7A0F]"
                       >
                         Visit site <ExternalLink className="w-3.5 h-3.5" />
                       </a>
