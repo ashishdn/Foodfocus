@@ -257,11 +257,17 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({ currentPage, onNavigate,
               type="button"
               onClick={onOpenSearch}
               aria-label="Search foodfocus"
-              className="inline-flex items-center gap-2.5 h-11 w-11 min-[1480px]:w-auto justify-center min-[1480px]:justify-start min-[1480px]:min-w-[210px] min-[1480px]:px-4 whitespace-nowrap rounded-full border border-white/20 text-white/70 hover:border-white/60 hover:text-white transition-colors cursor-pointer"
+              className="group inline-flex items-center gap-2.5 h-11 w-11 justify-center rounded-full border border-white/20 bg-white/[.04] text-white/60 hover:border-white/50 hover:bg-white/[.08] hover:text-white transition-colors cursor-pointer
+                md:max-xl:w-[250px] md:max-xl:justify-start md:max-xl:pl-4 md:max-xl:pr-2
+                min-[1480px]:w-[250px] min-[1480px]:justify-start min-[1480px]:pl-4 min-[1480px]:pr-2"
             >
-              <Search className="w-4 h-4" />
-              <span className="hidden min-[1480px]:inline text-[14px]">Search R638, HACCP…</span>
-              <kbd className="hidden min-[1480px]:inline ml-auto font-mono text-[11px] px-1.5 rounded border border-white/20 text-white/50">/</kbd>
+              <Search className="w-4 h-4 shrink-0" />
+              <span className="hidden md:max-xl:inline min-[1480px]:inline flex-1 min-w-0 truncate text-left text-[14px]">
+                Search regulations…
+              </span>
+              <kbd className="hidden md:max-xl:inline-flex min-[1480px]:inline-flex items-center h-7 px-2 rounded-full bg-white/10 font-sans text-[11px] font-semibold text-white/60 group-hover:text-white/80">
+                Ctrl K
+              </kbd>
             </button>
             <button type="button" onClick={onSubscribe} className="ff-btn ff-btn-lime hidden sm:inline-flex px-5">
               Subscribe
